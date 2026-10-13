@@ -1,0 +1,153 @@
+/* "Install PrintX" button + iOS instructions sheet. Matches the app's dark,
+   blue/purple brand without redesigning anything. */
+
+.install-printx {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  min-height: 44px; /* touch target */
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.install-printx.solid {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+.install-printx.solid:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
+}
+
+.install-printx.ghost {
+  background: rgba(255, 255, 255, 0.05);
+  color: #e5e7eb;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.install-printx.ghost:hover {
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+.install-printx.installed {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #22c55e;
+  cursor: default;
+}
+
+/* iOS instructions sheet */
+.install-ios-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(5, 8, 15, 0.72);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 16px;
+  /* respect the iOS home indicator */
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+}
+
+.install-ios-sheet {
+  width: 100%;
+  max-width: 440px;
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 20px 20px 22px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: install-sheet-in 0.25s ease-out;
+}
+
+@keyframes install-sheet-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.install-ios-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.install-ios-head h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #e5e7eb;
+  margin: 0;
+}
+.install-ios-close {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #9ca3af;
+  cursor: pointer;
+}
+.install-ios-close:hover {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.install-ios-sub {
+  font-size: 14px;
+  color: #9ca3af;
+  margin: 0 0 14px;
+}
+
+.install-ios-steps {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.install-ios-steps li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: #e5e7eb;
+  line-height: 1.4;
+}
+.install-ios-steps li svg {
+  flex-shrink: 0;
+  color: #2563eb;
+}
+.install-ios-steps strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.install-ios-note {
+  font-size: 12.5px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Center the sheet on larger screens instead of bottom-sheet. */
+@media (min-width: 640px) {
+  .install-ios-backdrop {
+    align-items: center;
+  }
+}

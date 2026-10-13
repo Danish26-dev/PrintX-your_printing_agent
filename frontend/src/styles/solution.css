@@ -1,0 +1,220 @@
+/* Solution Section */
+.solution-section {
+  padding: 120px 40px;
+  background: linear-gradient(180deg, #0B0F19 0%, #111827 100%);
+  position: relative;
+}
+
+.solution-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.solution-timeline {
+  position: relative;
+  padding: 60px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.timeline-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  animation: fadeInUp 0.6s ease-out both;
+  position: relative;
+}
+
+.timeline-step:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.timeline-step:nth-child(even) .step-content {
+  text-align: right;
+}
+
+.timeline-step:nth-child(even) .step-number {
+  right: auto;
+  left: -20px;
+}
+
+.step-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.step-icon-wrapper {
+  width: 90px;
+  height: 90px;
+  background: #111827;
+  border: 2px solid rgba(37, 99, 235, 0.3);
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563EB;
+  position: relative;
+  z-index: 2;
+  transition: all 0.4s ease;
+}
+
+.step-icon-wrapper.active {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(124, 58, 237, 0.2));
+  border-color: #2563EB;
+  box-shadow: 0 0 40px rgba(37, 99, 235, 0.4);
+}
+
+.step-icon-wrapper.completed {
+  background: linear-gradient(135deg, rgba(20, 184, 166, 0.2), rgba(37, 99, 235, 0.2));
+  border-color: #14B8A6;
+  color: #14B8A6;
+  box-shadow: 0 0 40px rgba(20, 184, 166, 0.3);
+}
+
+.timeline-step:hover .step-icon-wrapper {
+  transform: scale(1.15) rotate(-5deg);
+  box-shadow: 0 0 50px rgba(37, 99, 235, 0.6);
+}
+
+.step-content {
+  flex: 1;
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 36px;
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.timeline-step:nth-child(odd) .step-content::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  border-right: 12px solid rgba(255, 255, 255, 0.08);
+}
+
+.timeline-step:nth-child(even) .step-content::before {
+  content: '';
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  border-left: 12px solid rgba(255, 255, 255, 0.08);
+}
+
+.timeline-step:hover .step-content {
+  border-color: rgba(37, 99, 235, 0.3);
+  transform: translateX(8px);
+  box-shadow: 0 10px 40px rgba(37, 99, 235, 0.15);
+}
+
+.timeline-step:nth-child(even):hover .step-content {
+  transform: translateX(-8px);
+}
+
+.step-title {
+  font-size: 26px;
+  font-weight: 600;
+  color: #E5E7EB;
+  margin-bottom: 12px;
+}
+
+.step-description {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #9CA3AF;
+}
+
+.step-number {
+  position: absolute;
+  right: -20px;
+  top: -20px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #2563EB, #7C3AED);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: #FFFFFF;
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .timeline-step,
+  .timeline-step:nth-child(even) {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .timeline-step:nth-child(even) .step-content {
+    text-align: left;
+  }
+
+  .step-content::before,
+  .timeline-step:nth-child(even) .step-content::before {
+    display: none;
+  }
+
+  .timeline-step:hover .step-content,
+  .timeline-step:nth-child(even):hover .step-content {
+    transform: translateY(-8px);
+  }
+
+  .step-number,
+  .timeline-step:nth-child(even) .step-number {
+    right: -10px;
+    left: auto;
+    top: -10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .solution-section {
+    padding: 80px 20px;
+  }
+
+  .solution-timeline {
+    gap: 60px;
+  }
+
+  .step-icon-wrapper {
+    width: 70px;
+    height: 70px;
+  }
+
+  .step-content {
+    padding: 28px;
+  }
+
+  .step-title {
+    font-size: 22px;
+  }
+}

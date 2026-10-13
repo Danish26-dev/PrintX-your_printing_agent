@@ -1,0 +1,1595 @@
+/* Workspace Page */
+.workspace-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #0B0F19;
+  overflow: hidden;
+}
+
+/* Custom Dark Scrollbars */
+.workspace-page *::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.workspace-page *::-webkit-scrollbar-track {
+  background: #0B0F19;
+  border-radius: 10px;
+}
+
+.workspace-page *::-webkit-scrollbar-thumb {
+  background: #1F2937;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.workspace-page *::-webkit-scrollbar-thumb:hover {
+  background: #2563EB;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
+}
+
+/* Firefox scrollbar */
+.workspace-page * {
+  scrollbar-width: thin;
+  scrollbar-color: #1F2937 #0B0F19;
+}
+
+/* Workspace Header */
+.workspace-header {
+  height: 70px;
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  flex-shrink: 0;
+}
+
+.workspace-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.workspace-header-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.workspace-logo {
+  height: 42px;
+  width: auto;
+}
+
+.workspace-brand {
+  font-size: 24px;
+  font-weight: 700;
+  color: #E5E7EB;
+  letter-spacing: -0.5px;
+}
+
+.workspace-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 10px;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  background: #22C55E;
+  border-radius: 50%;
+  animation: pulse-status 2s ease-in-out infinite;
+}
+
+@keyframes pulse-status {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 16px rgba(34, 197, 94, 0.8);
+  }
+}
+
+.status-text {
+  color: #22C55E;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Workspace Container */
+.workspace-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Vertical Sidebar */
+.vertical-sidebar {
+  width: 72px;
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 0;
+  position: relative;
+  flex-shrink: 0;
+  box-shadow: 2px 0 20px rgba(124, 58, 237, 0.05);
+}
+
+.vertical-nav-items {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+.vertical-nav-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  color: #9CA3AF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.vertical-nav-icon:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(37, 99, 235, 0.4);
+  color: #2563EB;
+  transform: scale(1.08);
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.3), 0 0 40px rgba(124, 58, 237, 0.2);
+}
+
+.vertical-nav-icon.active {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(124, 58, 237, 0.15));
+  border-color: #2563EB;
+  color: #2563EB;
+  box-shadow: 0 0 16px rgba(37, 99, 235, 0.4);
+}
+
+.vertical-nav-icon.active::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 24px;
+  background: linear-gradient(180deg, #2563EB, #7C3AED);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.6);
+}
+
+/* Scoped under .workspace-page (customer workspace only) so this flex layout
+   never collides with the shopkeeper workspace's own `.workspace-main` grid
+   (both stylesheets are concatenated into one bundle). The customer main area
+   is a flex row: the chat fills the available width and the preview drawer is
+   an on-demand column (width:0 until opened) — so there is no reserved blank
+   space on the right. */
+.workspace-page .workspace-main {
+  flex: 1;
+  display: flex;
+  position: relative;
+  min-width: 0;
+}
+
+/* Shop Sidebar */
+.shop-sidebar {
+  width: 360px;
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 0 16px 0 0;
+  box-shadow: 2px 0 20px rgba(124, 58, 237, 0.05);
+}
+
+.sidebar-header {
+  padding: 20px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(11, 15, 25, 0.4);
+}
+
+.search-container {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6B7280;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 14px 10px 42px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #E5E7EB;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #2563EB;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.search-input::placeholder {
+  color: #6B7280;
+}
+
+.shops-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.shop-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.shop-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(124, 58, 237, 0.08), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.shop-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(37, 99, 235, 0.3);
+  transform: translateX(4px);
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.15);
+}
+
+.shop-card:hover::before {
+  opacity: 1;
+}
+
+.shop-card.active {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+  border-color: #2563EB;
+  box-shadow: 0 4px 24px rgba(37, 99, 235, 0.2);
+}
+
+.shop-card.active::before {
+  opacity: 1;
+}
+
+.shop-card.printx-shop {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(124, 58, 237, 0.08));
+  border-color: rgba(37, 99, 235, 0.3);
+}
+
+.shop-card.printx-shop::before {
+  opacity: 0.6;
+}
+
+.shop-name-with-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shop-logo-small {
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+}
+
+.shop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.shop-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #E5E7EB;
+  margin: 0;
+}
+
+.shop-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #E5E7EB;
+}
+
+.shop-badges {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.badge-verified {
+  background: rgba(20, 184, 166, 0.1);
+  border: 1px solid rgba(20, 184, 166, 0.3);
+  color: #14B8A6;
+}
+
+.badge-ai {
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  color: #7C3AED;
+}
+
+.shop-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #9CA3AF;
+}
+
+.shop-location {
+  color: #6B7280;
+}
+
+.shop-location.official {
+  color: #2563EB;
+  font-weight: 600;
+}
+
+.shop-status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.shop-status.online {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22C55E;
+}
+
+.shop-status.busy {
+  background: rgba(251, 146, 60, 0.1);
+  color: #FB923C;
+}
+
+/* Agent Status Badge */
+.agent-status-badge {
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.agent-status-badge.online {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #22C55E;
+}
+
+.agent-status-badge.online .status-indicator {
+  width: 8px;
+  height: 8px;
+  background: #22C55E;
+  border-radius: 50%;
+  animation: pulse-indicator 2s ease-in-out infinite;
+}
+
+.agent-status-badge.offline {
+  background: rgba(107, 114, 128, 0.15);
+  border: 1px solid rgba(107, 114, 128, 0.3);
+  color: #9CA3AF;
+}
+
+.agent-status-badge.offline .status-indicator {
+  width: 8px;
+  height: 8px;
+  background: #6B7280;
+  border-radius: 50%;
+}
+
+@keyframes pulse-indicator {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 16px rgba(34, 197, 94, 0.8);
+  }
+}
+
+.loading-state,
+.empty-state {
+  padding: 40px 20px;
+  text-align: center;
+  color: #6B7280;
+}
+
+/* Chat Interface */
+.chat-interface {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #0B0F19;
+  border-radius: 0 16px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.chat-interface::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: #0D1117;
+  background-image: 
+    url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 10L30 20L20 20Z' fill='%23ffffff' opacity='0.02'/%3E%3Cpath d='M70 15L75 25L65 25Z' fill='%23ffffff' opacity='0.015'/%3E%3Cpath d='M45 35L50 45L40 45Z' fill='%23ffffff' opacity='0.02'/%3E%3Cpath d='M80 50L85 60L75 60Z' fill='%23ffffff' opacity='0.015'/%3E%3Cpath d='M15 55L20 65L10 65Z' fill='%23ffffff' opacity='0.02'/%3E%3Cpath d='M55 70L60 80L50 80Z' fill='%23ffffff' opacity='0.015'/%3E%3Cpath d='M35 85L40 95L30 95Z' fill='%23ffffff' opacity='0.02'/%3E%3Ccircle cx='60' cy='25' r='1.5' fill='%232563EB' opacity='0.03'/%3E%3Ccircle cx='20' cy='40' r='1' fill='%237C3AED' opacity='0.03'/%3E%3Ccircle cx='85' cy='35' r='1.5' fill='%232563EB' opacity='0.02'/%3E%3Ccircle cx='40' cy='60' r='1' fill='%237C3AED' opacity='0.03'/%3E%3Ccircle cx='75' cy='80' r='1.5' fill='%232563EB' opacity='0.02'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.chat-interface::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(135deg, rgba(37, 99, 235, 0.01) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(124, 58, 237, 0.01) 25%, transparent 25%),
+    linear-gradient(45deg, rgba(37, 99, 235, 0.01) 25%, transparent 25%),
+    linear-gradient(315deg, rgba(124, 58, 237, 0.01) 25%, transparent 25%);
+  background-size: 80px 80px;
+  background-position: 0 0, 0 40px, 40px -40px, -40px 0px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.chat-empty-state {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-state-content {
+  text-align: center;
+  max-width: 400px;
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.empty-state-content h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #E5E7EB;
+  margin-bottom: 8px;
+}
+
+.empty-state-content p {
+  font-size: 15px;
+  color: #9CA3AF;
+  line-height: 1.6;
+}
+
+.chat-header {
+  padding: 20px 24px;
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  z-index: 2;
+  position: relative;
+}
+
+/* The chat-header back arrow is a MOBILE-only affordance; hidden by default so
+   the desktop sidebar+chat layout is unchanged. The <=768px block shows it. */
+.chat-back {
+  display: none;
+}
+
+.chat-shop-info h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #E5E7EB;
+  margin: 0 0 4px 0;
+}
+
+.chat-shop-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #9CA3AF;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-dot.online {
+  background: #22C55E;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 1;
+  position: relative;
+}
+
+.message {
+  display: flex;
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.message-user {
+  justify-content: flex-end;
+}
+
+.message-ai,
+.message-system {
+  justify-content: flex-start;
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 12px 16px;
+  border-radius: 20px;
+  position: relative;
+}
+
+.message-bubble.has-file {
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.message-user .message-bubble {
+  background: linear-gradient(135deg, #2563EB, #7C3AED);
+  color: #FFFFFF;
+  border-bottom-right-radius: 6px;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+}
+
+.message-user .message-bubble.has-file {
+  background: transparent;
+  border: 2px solid;
+  border-image: linear-gradient(135deg, #2563EB, #7C3AED) 1;
+  border-radius: 20px;
+  padding: 4px;
+}
+
+.message-ai .message-bubble {
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  color: #E5E7EB;
+  border-bottom-left-radius: 6px;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.15), inset 0 1px 0 rgba(124, 58, 237, 0.1);
+}
+
+.message-system .message-bubble {
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  color: #E5E7EB;
+  max-width: 80%;
+  text-align: center;
+  border-radius: 20px;
+}
+
+.message-text {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 6px 0;
+  white-space: pre-wrap;
+}
+
+.message-time {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.typing-bubble {
+  padding: 16px 20px !important;
+  background: #111827 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.typing-indicator {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.typing-dot {
+  width: 8px;
+  height: 8px;
+  background: #9CA3AF;
+  border-radius: 50%;
+  animation: typingBounce 1.4s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingBounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-8px);
+  }
+}
+
+.chat-input-container {
+  padding: 20px 24px;
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  z-index: 2;
+  position: relative;
+}
+
+.attach-button {
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #9CA3AF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.attach-button:hover:not(:disabled) {
+  background: rgba(37, 99, 235, 0.1);
+  border-color: #2563EB;
+  color: #2563EB;
+}
+
+.attach-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.chat-input {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  color: #E5E7EB;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.chat-input:focus {
+  outline: none;
+  border-color: #2563EB;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.chat-input::placeholder {
+  color: #6B7280;
+}
+
+.send-button {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #2563EB, #7C3AED);
+  border: none;
+  border-radius: 12px;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.send-button:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+}
+
+.send-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Preview Drawer */
+.drawer-toggle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 80px;
+  background: rgba(37, 99, 235, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(37, 99, 235, 0.3);
+  border-right: none;
+  border-radius: 12px 0 0 12px;
+  color: #2563EB;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+  box-shadow: -4px 0 20px rgba(37, 99, 235, 0.15);
+}
+
+.drawer-toggle:hover {
+  background: rgba(37, 99, 235, 0.2);
+  width: 36px;
+  box-shadow: -6px 0 30px rgba(37, 99, 235, 0.25);
+}
+
+.preview-drawer {
+  width: 0;
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  border-radius: 16px 0 0 0;
+  box-shadow: -2px 0 20px rgba(124, 58, 237, 0.1);
+}
+
+.preview-drawer.open {
+  width: 420px;
+}
+
+.drawer-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(11, 15, 25, 0.4);
+}
+
+.drawer-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #E5E7EB;
+  margin: 0;
+}
+
+.drawer-close {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #9CA3AF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.drawer-close:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #EF4444;
+  color: #EF4444;
+}
+
+.drawer-tabs {
+  display: flex;
+  padding: 16px 24px;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(11, 15, 25, 0.4);
+}
+
+.drawer-tab {
+  flex: 1;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  color: #9CA3AF;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+
+.drawer-tab:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(37, 99, 235, 0.2);
+}
+
+.drawer-tab.active {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(124, 58, 237, 0.15));
+  border-color: #2563EB;
+  color: #2563EB;
+  box-shadow: 0 2px 12px rgba(37, 99, 235, 0.2);
+}
+
+.drawer-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.drawer-preview-area {
+
+
+/* Document Preview Card */
+.doc-preview-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  max-width: 280px;
+}
+
+.doc-preview-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.doc-preview-thumbnail {
+  width: 100%;
+  height: 180px;
+  background: #F3F4F6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.doc-preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.doc-preview-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
+}
+
+.doc-preview-page {
+  width: 140px;
+  height: 160px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  position: relative;
+}
+
+.doc-preview-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.doc-line {
+  height: 4px;
+  background: linear-gradient(90deg, #E5E7EB, #D1D5DB);
+  border-radius: 2px;
+}
+
+.doc-line.short {
+  width: 70%;
+}
+
+.doc-preview-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid #E5E7EB;
+  color: #6B7280;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.doc-preview-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #6B7280;
+}
+
+.doc-preview-ext {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2563EB;
+}
+
+.doc-preview-info {
+  padding: 12px 14px;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.doc-preview-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.doc-preview-icon {
+  color: #2563EB;
+  flex-shrink: 0;
+}
+
+.doc-preview-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.doc-preview-size {
+  font-size: 11px;
+  color: #6B7280;
+}
+
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-content-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.preview-image-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.preview-image-full {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.preview-pdf-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #FFFFFF;
+}
+
+.preview-pdf-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.preview-document-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.preview-doc-icon-large {
+  color: #7C3AED;
+  margin-bottom: 16px;
+}
+
+.preview-doc-name-large {
+  font-size: 15px;
+  font-weight: 600;
+  color: #E5E7EB;
+  margin: 0 0 8px 0;
+  word-break: break-word;
+}
+
+.preview-doc-size-large {
+  font-size: 13px;
+  color: #9CA3AF;
+  margin: 0 0 4px 0;
+}
+
+.preview-doc-type {
+  font-size: 11px;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.preview-status-overlay {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+}
+
+.preview-status-badge {
+  padding: 10px 16px;
+  background: rgba(37, 99, 235, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(37, 99, 235, 0.3);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.preview-status-badge.edited {
+  background: rgba(124, 58, 237, 0.95);
+  border-color: rgba(124, 58, 237, 0.3);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.preview-status-badge.final {
+  background: rgba(20, 184, 166, 0.95);
+  border-color: rgba(20, 184, 166, 0.3);
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+}
+
+.drawer-footer {
+  padding: 20px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.file-info-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.file-info-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(37, 99, 235, 0.3);
+}
+
+.file-icon {
+  color: #7C3AED;
+  flex-shrink: 0;
+}
+
+.file-details-extended {
+  flex: 1;
+  min-width: 0;
+}
+
+.file-name-footer {
+  font-size: 14px;
+  font-weight: 600;
+  color: #E5E7EB;
+  margin: 0 0 4px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-meta-footer {
+  font-size: 12px;
+  color: #6B7280;
+  margin: 0;
+}
+
+.file-download-btn {
+  width: 36px;
+  height: 36px;
+  background: rgba(37, 99, 235, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  border-radius: 8px;
+  color: #2563EB;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.file-download-btn:hover {
+  background: rgba(37, 99, 235, 0.2);
+  border-color: #2563EB;
+  transform: scale(1.05);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .shop-sidebar {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .preview-drawer.open {
+    width: 100%;
+    max-width: 360px;
+  }
+}
+
+
+/* Edited Document Preview */
+.edited-doc-preview {
+  margin-top: 16px;
+  background: rgba(17, 24, 39, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+}
+
+.edited-doc-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(37, 99, 235, 0.05);
+}
+
+.edited-doc-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #2563EB, #7C3AED);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+}
+
+.edited-doc-title h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #E5E7EB;
+  margin: 0 0 4px 0;
+}
+
+.edited-doc-title p {
+  font-size: 12px;
+  color: #9CA3AF;
+  margin: 0;
+}
+
+.edited-doc-iframe-container {
+  width: 100%;
+  height: 400px;
+  background: #FFFFFF;
+  position: relative;
+}
+
+.edited-doc-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.edited-doc-actions {
+  display: flex;
+  gap: 10px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.doc-action-button {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.doc-action-button.secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: #E5E7EB;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.doc-action-button.secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.doc-action-button.primary {
+  background: linear-gradient(135deg, #2563EB, #7C3AED);
+  color: #FFFFFF;
+  border: 1px solid transparent;
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+
+.doc-action-button.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
+}
+
+.doc-action-button svg {
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .edited-doc-actions {
+
+
+/* Streaming Text Effect */
+.streaming-text {
+  white-space: pre-wrap;
+}
+
+.streaming-cursor {
+  display: inline-block;
+  animation: blink 1s infinite;
+  color: #2563EB;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+    flex-direction: column;
+  }
+  
+  .edited-doc-iframe-container {
+    height: 300px;
+  }
+}
+
+
+
+/* ==========================================================================
+   PWA / MOBILE RESPONSIVENESS (customer workspace)
+   Additive, scoped under media queries — desktop layout is unchanged.
+   Goals: no horizontal overflow at 360-430px, a usable chat with the mobile
+   keyboard open, the shop list + chat both reachable, and the preview as a
+   full-screen overlay instead of a width-competing column.
+   ========================================================================== */
+
+/* Use the dynamic viewport height where supported so the chat input isn't
+   pushed under the mobile browser UI / keyboard. Falls back to 100vh. */
+@supports (height: 100dvh) {
+  .workspace-page { height: 100dvh; }
+}
+
+@media (max-width: 768px) {
+  /* On a phone the workspace is a single-pane flow: either the shop list OR the
+     full-screen chat (see .mobile-view-* below), never both. The 72px icon rail
+     is hidden to reclaim width — its only working action (Landing) is reachable
+     from the browser. */
+  .workspace-container {
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .vertical-sidebar {
+    display: none;
+  }
+
+  /* MOBILE NAVIGATION: show exactly ONE pane at a time — the shop list OR the
+     full-screen chat — driven by the .mobile-view-* class on the container.
+     This replaces the old "both stacked" layout so the chat genuinely replaces
+     the shop list after a shop is selected. Desktop/tablet never get these
+     classes applied (this block is <=768px only), so their layout is intact. */
+  .shop-sidebar {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: none;
+    flex: 1 1 auto;
+    min-height: 0;
+    flex-shrink: 1;
+    border-right: none;
+    border-radius: 0;
+  }
+
+  .workspace-page .workspace-main {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  /* List view: show the shop list full-screen, hide the chat pane. */
+  .workspace-container.mobile-view-list .workspace-main {
+    display: none;
+  }
+  .workspace-container.mobile-view-list .shop-sidebar {
+    display: flex;
+  }
+
+  /* Chat view: show the chat full-screen, hide the shop list entirely. */
+  .workspace-container.mobile-view-chat .shop-sidebar {
+    display: none;
+  }
+  .workspace-container.mobile-view-chat .workspace-main {
+    display: flex;
+  }
+
+  .chat-interface {
+    border-radius: 0;
+  }
+
+  /* Mobile-only back arrow in the chat header. */
+  .chat-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    margin-right: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #e5e7eb;
+    cursor: pointer;
+  }
+  .chat-back:active { background: rgba(255, 255, 255, 0.12); }
+
+  /* Lay the chat header out as a row so the back arrow sits beside the title,
+     with safe-area padding so controls clear the notch/status bar. */
+  .chat-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    padding-top: calc(14px + env(safe-area-inset-top));
+  }
+  .chat-messages { padding: 16px 14px; gap: 12px; }
+  .message-bubble { max-width: 85%; }
+  .message-system .message-bubble { max-width: 92%; }
+
+  /* Keyboard-aware, safe-area-aware input bar. 16px font stops iOS auto-zoom. */
+  .chat-input-container {
+    padding: 12px 14px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    gap: 8px;
+  }
+  .chat-input {
+    font-size: 16px;
+  }
+
+  /* Preview opens as a FULL-SCREEN overlay instead of a 360px flex column, so
+     it never squeezes the chat or causes horizontal overflow. It is a vertical
+     flex column: a fixed (sticky) header + tabs, a scrolling preview area, and
+     a fixed footer — so the controls stay INSIDE the visible preview and never
+     overlap the chat composer underneath. */
+  .preview-drawer {
+    position: fixed;
+    inset: 0;
+    width: 0;
+    z-index: 1200;
+    border-left: none;
+    border-radius: 0;
+    transition: none;
+    flex-direction: column;
+  }
+  .preview-drawer.open {
+    width: 100% !important;
+    max-width: 100% !important;
+    /* Use the dynamic viewport height so the overlay matches the visible area
+       (not the taller 100vh that hides behind mobile browser chrome). */
+    height: 100%;
+  }
+
+  /* Header pinned to the top of the overlay, clearing the notch/status bar.
+     Its back/close controls therefore sit at the very top of the preview,
+     not floating low over the composer. */
+  .preview-drawer .drawer-header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    flex-shrink: 0;
+    padding-top: calc(20px + env(safe-area-inset-top));
+  }
+  .preview-drawer .drawer-tabs {
+    flex-shrink: 0;
+  }
+  /* The ONE scrolling region inside the overlay. */
+  .preview-drawer .drawer-preview-area {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+  }
+  /* Footer clears the home indicator. */
+  .preview-drawer .drawer-footer {
+    flex-shrink: 0;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  }
+  /* Comfortable, non-clipped touch target for the close button. */
+  .drawer-close {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+
+  /* The pull-tab toggle only makes sense when the drawer is CLOSED. When open,
+     the drawer's own header close button is the control, so the floating tab
+     must never also appear (prevents a duplicate/again-overlapping arrow). It
+     sits above the composer's safe area when shown. */
+  .drawer-toggle {
+    top: auto;
+    bottom: calc(84px + env(safe-area-inset-bottom));
+    transform: none;
+    height: 44px;
+    width: 44px;
+    border-radius: 12px;
+  }
+  /* (The pull-tab is already removed from the DOM by React when the drawer is
+     open — it renders only when !isOpen — so no duplicate arrow can appear.) */
+
+  /* When the preview overlay is open, lock the page behind it so it can't
+     scroll through (progressive enhancement; the fixed full-screen overlay
+     already visually covers the page where :has() is unsupported). */
+  .workspace-page:has(.preview-drawer.open) .workspace-container {
+    overflow: hidden;
+  }
+
+  /* Inline edited-document preview: a shorter iframe reads better on phones. */
+  .edited-doc-iframe-container { height: 46vh; min-height: 260px; }
+}
+
+/* Very small phones (<=400px): trim the hero/landing install button spacing and
+   prevent any residual horizontal scroll app-wide. */
+@media (max-width: 400px) {
+  .chat-header h3 { font-size: 16px; }
+}

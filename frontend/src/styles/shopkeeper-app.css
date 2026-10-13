@@ -1,0 +1,1394 @@
+/* ============================================================
+   PrintX Shopkeeper App — sidebar layout + dashboard/workspace
+   Dark SaaS theme, consistent with the existing PrintX language.
+   ============================================================ */
+
+:root {
+  --px-bg: #0B0F19;
+  --px-panel: rgba(17, 24, 39, 0.95);
+  --px-card: rgba(255, 255, 255, 0.03);
+  --px-border: rgba(255, 255, 255, 0.08);
+  --px-border-soft: rgba(255, 255, 255, 0.06);
+  --px-text: #E5E7EB;
+  --px-muted: #9CA3AF;
+  --px-dim: #6B7280;
+  --px-blue: #2563EB;
+  --px-purple: #7C3AED;
+  --px-green: #22C55E;
+  --px-red: #EF4444;
+  --px-amber: #F59E0B;
+}
+
+.sk-shell {
+  display: flex;
+  min-height: 100vh;
+  background: var(--px-bg);
+  color: var(--px-text);
+}
+
+/* ---------- Sidebar ---------- */
+.sk-sidebar {
+  width: 248px;
+  flex-shrink: 0;
+  background: var(--px-panel);
+  border-right: 1px solid var(--px-border-soft);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.sk-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px 24px 12px;
+  border-bottom: 1px solid var(--px-border-soft);
+  margin-bottom: 16px;
+}
+
+.sk-brand-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--px-blue), var(--px-purple));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.sk-brand-name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.sk-brand-role {
+  font-size: 12px;
+  color: var(--px-muted);
+  margin: 2px 0 0 0;
+}
+
+.sk-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.sk-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  color: var(--px-muted);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.sk-nav-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--px-text);
+}
+
+.sk-nav-item.active {
+  background: rgba(37, 99, 235, 0.12);
+  border-color: rgba(37, 99, 235, 0.3);
+  color: #fff;
+}
+
+.sk-nav-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 16px;
+  border-top: 1px solid var(--px-border-soft);
+}
+
+.sk-nav-item.danger:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: var(--px-red);
+}
+
+/* ---------- Main area ---------- */
+.sk-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sk-topbar {
+  padding: 20px 32px;
+  border-bottom: 1px solid var(--px-border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sk-topbar h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.sk-topbar p {
+  font-size: 13px;
+  color: var(--px-muted);
+  margin: 4px 0 0 0;
+}
+
+.sk-content {
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1500px;
+  width: 100%;
+}
+
+/* ---------- Cards ---------- */
+.sk-card {
+  background: var(--px-panel);
+  border: 1px solid var(--px-border);
+  border-radius: 18px;
+  padding: 24px;
+}
+
+.sk-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--px-text);
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sk-section-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--px-dim);
+  margin: 0 0 12px 0;
+  font-weight: 600;
+}
+
+/* ---------- Order acceptance control ---------- */
+.sk-order-control {
+  background: var(--px-panel);
+  border: 1px solid var(--px-border);
+  border-radius: 20px;
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.sk-order-control.online {
+  border-color: rgba(34, 197, 94, 0.35);
+  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.1), 0 10px 40px rgba(34, 197, 94, 0.08);
+}
+
+.sk-order-control.offline {
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+.sk-order-left h2 {
+  font-size: 20px;
+  margin: 0 0 8px 0;
+}
+
+.sk-order-state {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.sk-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.sk-dot.green { background: var(--px-green); box-shadow: 0 0 10px var(--px-green); animation: sk-pulse 1.6s infinite; }
+.sk-dot.red { background: var(--px-red); }
+.sk-dot.amber { background: var(--px-amber); }
+.sk-dot.gray { background: var(--px-dim); }
+
+@keyframes sk-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.25); }
+}
+
+.sk-order-sub {
+  font-size: 13px;
+  color: var(--px-muted);
+  margin: 10px 0 0 0;
+}
+
+/* Toggle switch */
+.sk-switch {
+  position: relative;
+  width: 68px;
+  height: 36px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.1);
+  transition: background 0.25s ease;
+  flex-shrink: 0;
+}
+
+.sk-switch.on { background: linear-gradient(135deg, var(--px-blue), var(--px-purple)); }
+
+.sk-switch-knob {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.25s ease;
+}
+
+.sk-switch.on .sk-switch-knob { transform: translateX(32px); }
+
+/* ---------- Stat grid ---------- */
+.sk-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.sk-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+.sk-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.sk-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+
+.sk-stat {
+  background: var(--px-card);
+  border: 1px solid var(--px-border-soft);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.sk-stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1;
+}
+
+.sk-stat-label {
+  font-size: 13px;
+  color: var(--px-muted);
+  margin: 8px 0 0 0;
+}
+
+.sk-stat-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(37, 99, 235, 0.12);
+  color: var(--px-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+/* ---------- Status chips row ---------- */
+.sk-status-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.sk-status-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background: var(--px-card);
+  border: 1px solid var(--px-border-soft);
+  border-radius: 14px;
+  font-size: 14px;
+}
+
+.sk-status-chip .label { color: var(--px-muted); }
+.sk-status-chip .value { font-weight: 600; }
+
+/* ---------- Active job checklist ---------- */
+.sk-active-job .doc-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.sk-request {
+  font-size: 14px;
+  color: var(--px-text);
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 12px 0 18px 0;
+  font-style: italic;
+}
+
+.sk-steps { display: flex; flex-direction: column; gap: 10px; }
+
+.sk-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--px-muted);
+}
+
+.sk-step .mark {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  border: 1px solid var(--px-border);
+  flex-shrink: 0;
+}
+
+.sk-step.done { color: var(--px-text); }
+.sk-step.done .mark { background: rgba(34,197,94,0.15); border-color: rgba(34,197,94,0.4); color: var(--px-green); }
+.sk-step.current { color: #fff; }
+.sk-step.current .mark { background: rgba(37,99,235,0.2); border-color: rgba(37,99,235,0.5); color: #93C5FD; }
+
+/* ---------- Recent jobs table ---------- */
+.sk-table { width: 100%; border-collapse: collapse; }
+.sk-table th {
+  text-align: left;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--px-dim);
+  font-weight: 600;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--px-border-soft);
+}
+.sk-table td {
+  padding: 14px 12px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--px-border-soft);
+}
+.sk-table tr:last-child td { border-bottom: none; }
+
+.sk-badge {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.sk-badge.completed { background: rgba(34,197,94,0.12); color: var(--px-green); }
+.sk-badge.cancelled { background: rgba(239,68,68,0.12); color: var(--px-red); }
+.sk-badge.processing { background: rgba(37,99,235,0.12); color: #93C5FD; }
+
+/* ---------- Buttons ---------- */
+.sk-btn {
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+.sk-btn.primary { background: linear-gradient(135deg, var(--px-blue), var(--px-purple)); color: #fff; }
+.sk-btn.primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(37,99,235,0.35); }
+.sk-btn.ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--px-border); color: var(--px-text); }
+.sk-btn.ghost:hover { background: rgba(255,255,255,0.08); }
+.sk-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ============================================================
+   Workspace — AI operations console
+   ============================================================ */
+.sk-ws {
+  display: grid;
+  grid-template-columns: 300px 1fr 320px;
+  gap: 20px;
+  align-items: start;
+}
+
+.sk-ws-col { display: flex; flex-direction: column; gap: 20px; }
+
+.sk-demo-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--px-amber);
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.sk-agent-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--px-green);
+}
+
+.sk-activity-log { display: flex; flex-direction: column; gap: 2px; }
+.sk-activity-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--px-muted);
+}
+.sk-activity-line.done { color: var(--px-text); }
+.sk-activity-line.current { color: #fff; background: rgba(37,99,235,0.1); }
+.sk-activity-line .mk { width: 16px; text-align: center; flex-shrink: 0; }
+
+/* Desktop/printer mock */
+.sk-desktop {
+  position: relative;
+  background: #0e1424;
+  border: 1px solid var(--px-border);
+  border-radius: 14px;
+  min-height: 420px;
+  overflow: hidden;
+}
+.sk-desktop-bar {
+  height: 34px;
+  background: rgba(255,255,255,0.04);
+  border-bottom: 1px solid var(--px-border-soft);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  font-size: 12px;
+  color: var(--px-muted);
+}
+.sk-win-dot { width: 10px; height: 10px; border-radius: 50%; }
+.sk-print-dialog {
+  margin: 24px;
+  background: #121a2e;
+  border: 1px solid var(--px-border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.sk-pd-title { font-size: 15px; font-weight: 700; margin: 0 0 6px 0; }
+.sk-pd-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: var(--px-card);
+  border: 1px solid var(--px-border-soft);
+  border-radius: 10px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+.sk-pd-row.hot {
+  border-color: var(--px-blue);
+  background: rgba(37,99,235,0.12);
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.25);
+}
+.sk-pd-row .k { color: var(--px-muted); }
+.sk-pd-row .v { font-weight: 600; }
+.sk-pd-print {
+  align-self: flex-end;
+  padding: 10px 22px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--px-blue), var(--px-purple));
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  border: none;
+  transition: all 0.2s ease;
+}
+.sk-pd-print.hot { box-shadow: 0 0 0 3px rgba(37,99,235,0.4); transform: scale(1.03); }
+
+/* Agent cursor */
+.sk-cursor {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+  z-index: 20;
+  transition: left 0.7s cubic-bezier(.4,0,.2,1), top 0.7s cubic-bezier(.4,0,.2,1);
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+.sk-cursor-label {
+  position: absolute;
+  left: 20px;
+  top: 16px;
+  white-space: nowrap;
+  font-size: 11px;
+  background: var(--px-blue);
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.sk-current-action {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: rgba(37,99,235,0.08);
+  border: 1px solid rgba(37,99,235,0.2);
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+/* Printer panel */
+.sk-printer-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-size: 14px;
+  border-bottom: 1px solid var(--px-border-soft);
+}
+.sk-printer-row:last-child { border-bottom: none; }
+.sk-printer-row .k { color: var(--px-muted); }
+
+/* ---------- Subscriptions ---------- */
+.sk-plan-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.sk-plan {
+  background: var(--px-panel);
+  border: 1px solid var(--px-border);
+  border-radius: 18px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.sk-plan.current { border-color: rgba(37,99,235,0.5); box-shadow: 0 0 0 1px rgba(37,99,235,0.2); }
+.sk-plan h3 { margin: 0; font-size: 18px; }
+.sk-plan .price { font-size: 30px; font-weight: 800; }
+.sk-plan .price span { font-size: 14px; color: var(--px-muted); font-weight: 500; }
+.sk-plan ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.sk-plan li { font-size: 14px; color: var(--px-text); display: flex; gap: 8px; }
+
+.sk-usage-bar {
+  height: 8px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.sk-usage-fill { height: 100%; background: linear-gradient(90deg, var(--px-blue), var(--px-purple)); border-radius: 6px; }
+
+/* ---------- Account ---------- */
+.sk-field { display: flex; flex-direction: column; gap: 6px; }
+.sk-field label { font-size: 12px; color: var(--px-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+.sk-field .value { font-size: 15px; font-weight: 500; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1200px) {
+  .sk-ws { grid-template-columns: 1fr; }
+  .sk-grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
+  .sk-plan-cards { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .sk-sidebar { width: 72px; }
+  .sk-brand-name, .sk-brand-role, .sk-nav-item span { display: none; }
+  .sk-grid.cols-4, .sk-grid.cols-3 { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   Realistic Print Dialog (Workspace centerpiece)
+   ============================================================ */
+.sk-desktop2 {
+  position: relative;
+  background: #0e1424;
+  border: 1px solid var(--px-border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.sk-desktop2 .sk-desktop-bar {
+  height: 36px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--px-border-soft);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  font-size: 12px;
+  color: var(--px-muted);
+}
+
+.pd2 {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 0;
+  min-height: 480px;
+}
+
+/* Left preview */
+.pd2-preview {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: #0a0f1c;
+  border-right: 1px solid var(--px-border-soft);
+}
+.pd2-paper {
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 1 / 1.414; /* A4 */
+  background: #f7f8fa;
+  border-radius: 6px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+}
+.pd2-paper-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #475569;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 8px;
+}
+.pd2-paper-lines { display: flex; flex-direction: column; gap: 9px; }
+.pd2-paper-lines span { height: 7px; border-radius: 3px; background: #e2e8f0; display: block; }
+.pd2-paper-highlight {
+  margin-top: 6px;
+  align-self: flex-start;
+  font-size: 12px;
+  font-weight: 700;
+  color: #166534;
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  border-radius: 6px;
+  padding: 3px 8px;
+}
+.pd2-preview-caption { font-size: 12px; color: var(--px-dim); margin: 0; }
+
+/* Right settings */
+.pd2-settings {
+  padding: 20px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+  max-height: 560px;
+}
+.pd2-header { display: flex; align-items: baseline; justify-content: space-between; }
+.pd2-header h3 { margin: 0; font-size: 18px; font-weight: 700; }
+.pd2-total { margin: 0; font-size: 12px; color: var(--px-muted); }
+
+.pd2-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  margin: -8px;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+}
+.pd2-field.hot {
+  background: rgba(37, 99, 235, 0.12);
+  box-shadow: 0 0 0 1.5px rgba(37, 99, 235, 0.5) inset;
+}
+.pd2-label { font-size: 12px; color: var(--px-muted); font-weight: 500; }
+
+.pd2-select {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 12px;
+  background: var(--px-card);
+  border: 1px solid var(--px-border);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--px-text);
+}
+.pd2-select-hidden { display: none; }
+
+.pd2-printer { display: flex; flex-direction: column; gap: 6px; }
+.pd2-online { font-size: 12px; color: var(--px-green); }
+
+.pd2-copies { display: flex; align-items: center; gap: 10px; }
+.pd2-step {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--px-border);
+  background: var(--px-card);
+  color: var(--px-text);
+  display: flex; align-items: center; justify-content: center;
+  cursor: default;
+}
+.pd2-copies-val {
+  min-width: 54px;
+  text-align: center;
+  padding: 7px 0;
+  background: var(--px-card);
+  border: 1px solid var(--px-border);
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.pd2-segment {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.pd2-segment span {
+  text-align: center;
+  padding: 8px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1px solid var(--px-border);
+  background: var(--px-card);
+  color: var(--px-muted);
+}
+.pd2-segment span.on {
+  background: rgba(37, 99, 235, 0.15);
+  border-color: rgba(37, 99, 235, 0.5);
+  color: #fff;
+  font-weight: 600;
+}
+
+.pd2-options { display: flex; flex-direction: column; gap: 8px; margin-top: 2px; }
+.pd2-check { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--px-muted); }
+.pd2-check input { accent-color: var(--px-blue); }
+
+.pd2-system-link {
+  background: none;
+  border: none;
+  color: #93C5FD;
+  font-size: 13px;
+  text-align: left;
+  padding: 2px 0;
+  cursor: pointer;
+}
+.pd2-system-link:hover { text-decoration: underline; }
+
+.pd2-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 6px;
+  padding-top: 14px;
+  border-top: 1px solid var(--px-border-soft);
+}
+.pd2-cancel {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--px-border);
+  background: var(--px-card);
+  color: var(--px-text);
+  font-size: 14px;
+}
+.pd2-print {
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, var(--px-blue), var(--px-purple));
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+.pd2-print.hot { box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.4); transform: scale(1.04); }
+.pd2-print.clicked { transform: scale(0.96); filter: brightness(0.9); }
+
+/* Submitted banner */
+.pd2-submitted {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 12px;
+  font-size: 14px;
+  color: var(--px-green);
+  font-weight: 600;
+}
+
+/* Agent activity marker states */
+.sk-activity-line.pending { color: var(--px-dim); }
+.sk-activity-line.failed { color: var(--px-red); }
+.sk-activity-line.current .mk {
+  display: inline-block;
+  animation: sk-blink 1s steps(2, start) infinite;
+}
+@keyframes sk-blink { 50% { opacity: 0.35; } }
+
+@media (max-width: 1200px) {
+  .pd2 { grid-template-columns: 1fr; }
+  .pd2-preview { border-right: none; border-bottom: 1px solid var(--px-border-soft); }
+}
+
+/* ============================================================
+   Real printer flow — error / warning boxes + config rows
+   ============================================================ */
+.sk-error-box {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: var(--px-text);
+  font-size: 13px;
+}
+.sk-error-box svg { color: var(--px-red); flex-shrink: 0; margin-top: 2px; }
+
+.sk-warn-box {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: var(--px-text);
+}
+.sk-warn-box svg { color: #F59E0B; flex-shrink: 0; margin-top: 2px; }
+
+.sk-printer-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 13px;
+}
+.sk-printer-row .k { color: var(--px-muted); }
+
+/* ============================================================
+   Compact single-screen Workspace (v2)
+   Fits the printer controls + approval in one 1440x900 viewport
+   without page-level vertical scrolling. Each column scrolls
+   internally if its content is long.
+   ============================================================ */
+
+/* When the content area opts into "fill" mode (the workspace), it is bounded to
+   the viewport so the single-screen layout never causes page-level scrolling.
+   The shell is pinned to the viewport height and the content flexes to fill the
+   space left by the top bar — robust to the exact top-bar height. Other pages
+   keep their natural, scrollable content area. */
+.sk-shell:has(.sk-content-fill) { height: 100vh; overflow: hidden; }
+.sk-content-fill {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  padding-bottom: 20px;
+  /* Fallback bound for engines without :has() — caps the content to roughly the
+     viewport minus the top bar so the workspace still fits one screen. */
+  max-height: calc(100vh - 70px);
+}
+
+/* The workspace fills its (already bounded) content area. */
+.sk-ws2 {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) 340px;
+  gap: 18px;
+  height: 100%;
+  min-height: 0;
+}
+
+.sk-ws2-left,
+.sk-ws2-center,
+.sk-ws2-right {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0; /* allow children to shrink + scroll */
+}
+
+/* Cards in the workspace are tighter than the dashboard default. */
+.sk-ws2 .sk-card { padding: 16px; border-radius: 14px; }
+
+/* LEFT column */
+.sk-job-card { flex-shrink: 0; }
+.sk-job-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.sk-ws2 .doc-name {
+  font-size: 15px; font-weight: 600; margin: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.sk-job-id { font-size: 11px; color: var(--px-dim); margin: 2px 0 0 0; }
+.sk-ws2 .sk-request { margin: 10px 0 0 0; font-size: 13px; padding: 10px 12px; }
+
+.sk-activity-card { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.sk-activity-card .sk-activity-log { overflow-y: auto; flex: 1; min-height: 0; }
+.sk-ev-detail { color: var(--px-dim); }
+
+/* CENTER column — cursor stage wraps the real printer controls */
+.sk-ws2-banner-row { flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; }
+.sk-ws2-center .sk-current-action,
+.sk-ws2-center .pd2-submitted { padding: 10px 14px; font-size: 13px; }
+
+.sk-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: #0e1424;
+  border: 1px solid var(--px-border);
+  border-radius: 14px;
+}
+.sk-stage-note { flex-shrink: 0; font-size: 11px; color: var(--px-dim); margin: 0; }
+
+/* RIGHT column */
+.sk-preview-card { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.sk-preview-frame {
+  flex: 1; min-height: 0;
+  border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--px-border-soft);
+  background: #0a0f1c;
+}
+.sk-preview-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+.sk-approve-card { flex-shrink: 0; }
+.sk-approve-btn { width: 100%; justify-content: center; }
+.sk-approve-note { font-size: 11px; color: var(--px-dim); margin: 8px 0 0 0; }
+.sk-error-msg { font-size: 13px; margin: 4px 0 2px 0; }
+.sk-error-code { font-size: 11px; color: var(--px-dim); margin: 0 0 4px 0; font-family: ui-monospace, monospace; }
+.sk-error-hint { font-size: 12px; color: var(--px-muted); margin: 0; }
+
+/* ============================================================
+   Real PrintX printer-controls panel (replaces the system dialog)
+   ============================================================ */
+.pc-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  min-height: 100%;
+}
+.pc-head { display: flex; align-items: center; justify-content: space-between; }
+
+.pc-status {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600;
+  padding: 4px 10px; border-radius: 20px;
+  border: 1px solid var(--px-border);
+}
+.pc-status.verified { color: var(--px-green); background: rgba(34,197,94,0.12); border-color: rgba(34,197,94,0.3); }
+.pc-status.warning { color: var(--px-amber); background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.3); }
+.pc-status.failed { color: var(--px-red); background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.3); }
+.pc-status.pending { color: #93C5FD; background: rgba(37,99,235,0.12); border-color: rgba(37,99,235,0.3); }
+.pc-status.idle { color: var(--px-muted); }
+
+.pc-field {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 8px; margin: -2px;
+  border-radius: 10px;
+  transition: box-shadow 0.25s ease, background 0.25s ease;
+}
+.pc-field.hot {
+  background: rgba(37, 99, 235, 0.12);
+  box-shadow: 0 0 0 1.5px rgba(37, 99, 235, 0.6) inset;
+}
+.pc-label { font-size: 12px; color: var(--px-muted); font-weight: 500; }
+
+.pc-printer-row { display: flex; gap: 8px; align-items: center; }
+.pc-select {
+  flex: 1;
+  padding: 9px 12px;
+  background: var(--px-card);
+  border: 1px solid var(--px-border);
+  border-radius: 8px;
+  color: var(--px-text);
+  font-size: 14px;
+}
+.pc-select:disabled { opacity: 0.6; cursor: not-allowed; }
+.pc-refresh {
+  width: 36px; height: 36px; flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid var(--px-border);
+  background: var(--px-card);
+  color: var(--px-text);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.pc-refresh:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.pc-availability { display: flex; align-items: center; gap: 8px; }
+.pc-availability-text { font-size: 12px; color: var(--px-muted); text-transform: capitalize; }
+.pc-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.pc-dot.green { background: var(--px-green); box-shadow: 0 0 8px var(--px-green); }
+.pc-dot.red { background: var(--px-red); }
+.pc-dot.gray { background: var(--px-dim); }
+
+.pc-copies { display: flex; align-items: center; gap: 10px; }
+.pc-step {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--px-border);
+  background: var(--px-card);
+  color: var(--px-text);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.pc-step:disabled { opacity: 0.4; cursor: not-allowed; }
+.pc-copies-val {
+  min-width: 56px; text-align: center;
+  padding: 7px 0;
+  background: var(--px-card);
+  border: 1px solid var(--px-border);
+  border-radius: 8px;
+  font-size: 15px; font-weight: 700;
+}
+
+.pc-segment { display: flex; gap: 6px; }
+.pc-segment button {
+  flex: 1;
+  text-align: center;
+  padding: 8px 6px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1px solid var(--px-border);
+  background: var(--px-card);
+  color: var(--px-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.pc-segment button:hover:not(:disabled) { color: var(--px-text); border-color: rgba(37,99,235,0.4); }
+.pc-segment button.on {
+  background: rgba(37, 99, 235, 0.18);
+  border-color: rgba(37, 99, 235, 0.6);
+  color: #fff;
+  font-weight: 600;
+}
+.pc-segment button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.pc-panel .sk-warn-box ul,
+.pc-panel .sk-error-box { margin: 0; }
+.pc-panel .sk-warn-box ul { padding-left: 16px; }
+.pc-panel .sk-warn-box li { font-size: 12px; }
+
+.pc-apply { align-self: flex-start; margin-top: 2px; }
+
+.spin { animation: sk-spin 0.9s linear infinite; }
+@keyframes sk-spin { to { transform: rotate(360deg); } }
+
+/* ---------- Workspace responsiveness ---------- */
+@media (max-width: 1280px) {
+  .sk-ws2 {
+    grid-template-columns: 260px minmax(0, 1fr) 300px;
+  }
+}
+@media (max-width: 1024px) {
+  /* Below laptop width: stack and allow the page to scroll (controls stay
+     usable rather than being crushed). */
+  .sk-shell:has(.sk-content-fill) { height: auto; overflow: visible; }
+  .sk-content-fill { overflow: visible; max-height: none; }
+  .sk-ws2 {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .sk-stage { min-height: 420px; }
+  .sk-preview-frame { min-height: 320px; }
+}
+
+/* ============================================================
+   Printers & Devices (dashboard section)
+   ============================================================ */
+.sk-printers { display: flex; flex-direction: column; gap: 14px; }
+
+.pm-agent-row { display: flex; align-items: center; gap: 10px; }
+.pm-label { font-size: 14px; color: var(--px-text); font-weight: 600; }
+.pm-refresh { margin-left: auto; }
+
+.pm-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
+  padding: 4px 10px; border-radius: 20px;
+}
+.pm-badge.online { color: var(--px-green); background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); }
+.pm-badge.offline { color: var(--px-red); background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); }
+
+.pm-section { display: flex; flex-direction: column; gap: 8px; }
+.pm-dim { color: var(--px-dim); font-size: 13px; margin: 0; }
+.pm-demo-note { font-style: italic; }
+
+/* Demo-printer selection dropdown (two selectable demo devices). */
+.pm-demo-select { display: flex; align-items: center; gap: 10px; }
+.pm-select {
+  flex: 1;
+  padding: 9px 12px;
+  background: var(--px-card);
+  border: 1px solid var(--px-border);
+  border-radius: 10px;
+  color: var(--px-text);
+  font-size: 14px;
+}
+.pm-select:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.pm-device {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 14px;
+  background: var(--px-card);
+  border: 1px solid var(--px-border-soft);
+  border-radius: 12px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.pm-device.selected { border-color: rgba(37,99,235,0.6); background: rgba(37,99,235,0.1); }
+.pm-device.demo { border-style: dashed; }
+.pm-device-main { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.pm-device-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pm-device-status { font-size: 12px; color: var(--px-muted); text-transform: capitalize; }
+
+.pm-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.pm-dot.green { background: var(--px-green); box-shadow: 0 0 8px var(--px-green); }
+.pm-dot.red { background: var(--px-red); }
+.pm-dot.gray { background: var(--px-dim); }
+
+.pm-type {
+  font-size: 10px; font-weight: 800; letter-spacing: 1px;
+  padding: 2px 7px; border-radius: 6px;
+}
+.pm-type.real { color: #93C5FD; background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.4); }
+.pm-type.demo { color: var(--px-amber); background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.45); }
+
+.pm-selected {
+  background: var(--px-card);
+  border: 1px solid var(--px-border-soft);
+  border-radius: 12px;
+  padding: 14px;
+}
+.pm-selected-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 15px; }
+.pm-cap-grid {
+  display: grid; grid-template-columns: auto 1fr; gap: 6px 16px;
+  font-size: 13px;
+}
+.pm-cap-grid span:nth-child(odd) { color: var(--px-muted); }
+
+.pm-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* Test result + cursor step replay */
+.pm-test {
+  position: relative;
+  margin-top: 4px;
+  padding: 14px;
+  background: #0e1424;
+  border: 1px solid var(--px-border);
+  border-radius: 12px;
+}
+.pm-test-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.pm-steps { display: flex; flex-direction: column; gap: 8px; }
+.pm-step {
+  position: relative;
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px;
+  background: var(--px-card);
+  border: 1px solid var(--px-border-soft);
+  border-radius: 8px;
+  font-size: 13px;
+  transition: all 0.25s ease;
+}
+.pm-step.done { border-color: rgba(34,197,94,0.4); }
+.pm-step.done .pm-step-k { color: var(--px-text); }
+.pm-step.active { border-color: var(--px-blue); background: rgba(37,99,235,0.14); box-shadow: 0 0 0 1.5px rgba(37,99,235,0.5) inset; }
+.pm-step.failed { border-color: var(--px-red); background: rgba(239,68,68,0.12); }
+.pm-step-k { color: var(--px-muted); min-width: 110px; }
+.pm-step-v { font-weight: 700; color: #fff; }
+.pm-cursor {
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+/* ============================================================
+   Workspace v3 — Current Job (top) + 70/30 main + activity strip
+   Fits 1440x900 and 1280x800 without page-level scrolling.
+   ============================================================ */
+.sk-ws3 {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+  min-height: 0;
+}
+
+/* A. CURRENT JOB — compact horizontal strip */
+.sk-job-strip {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-shrink: 0;
+  background: var(--px-panel);
+  border: 1px solid var(--px-border);
+  border-radius: 14px;
+  padding: 12px 18px;
+}
+.sk-job-strip-item { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.sk-job-strip-item.grow { flex: 1; min-width: 0; }
+.sk-job-k {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px;
+  color: var(--px-dim); font-weight: 600;
+}
+.sk-job-v {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 14px; color: var(--px-text); font-weight: 600;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.sk-job-v.mono { font-family: ui-monospace, monospace; font-weight: 500; color: var(--px-muted); }
+
+/* B. MAIN — 70% config + 30% preview */
+.workspace-main {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(280px, 3fr);
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* LEFT 70% — printer configuration column (holds the live cursor) */
+.ws-config-col {
+  position: relative; /* coordinate basis for the .ws-cursor overlay */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  min-height: 0;
+  background: var(--px-panel);
+  border: 1px solid var(--px-border);
+  border-radius: 16px;
+  padding: 16px;
+}
+.ws-config-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-shrink: 0; }
+.ws-selected { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--px-muted); }
+.ws-selected strong { color: var(--px-text); }
+
+/* The controls region is the ONE intentional scroll area. It flexes to fill
+   the space between the head and the footer and scrolls internally only when
+   the controls genuinely cannot fit — never overlapping the footer. */
+.ws-stage {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px; /* room for the scrollbar so labels are never clipped */
+}
+.ws-stage .pc-panel { padding: 0; gap: 14px; min-height: 0; }
+
+/* The agent cursor overlay — a sibling of the scroll area, positioned relative
+   to the (position:relative) column, so it is NEVER clipped by the scroll
+   container and never scrolls out of view. */
+.ws-cursor { position: absolute; z-index: 30; pointer-events: none; }
+
+.ws-config-foot {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 12px;
+  margin-top: 2px;
+  border-top: 1px solid var(--px-border-soft);
+}
+.ws-config-foot .sk-btn.primary { width: 100%; justify-content: center; }
+
+.ws-stage-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: rgba(14, 20, 36, 0.78);
+  border-radius: 12px;
+  color: var(--px-muted); font-size: 14px; font-weight: 600;
+  z-index: 15;
+}
+.ws-stage-overlay svg { color: var(--px-amber); }
+
+/* RIGHT 30% — document preview, bounded with its own scroll */
+.ws-preview-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--px-panel);
+  border: 1px solid var(--px-border);
+  border-radius: 16px;
+  padding: 14px;
+}
+.ws-preview-head {
+  display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+  font-size: 13px; color: var(--px-muted); margin-bottom: 10px;
+}
+.ws-preview-name { font-weight: 600; color: var(--px-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ws-preview-frame {
+  flex: 1; min-height: 0;
+  border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--px-border-soft);
+  background: #0a0f1c;
+}
+.ws-preview-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+.ws-preview-empty { color: var(--px-dim); font-size: 13px; }
+
+/* C. LIVE ACTIVITY strip */
+.sk-activity-strip {
+  flex-shrink: 0;
+  background: var(--px-panel);
+  border: 1px solid var(--px-border);
+  border-radius: 12px;
+  padding: 10px 16px;
+}
+.sk-activity-strip-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 13px; }
+.sk-activity-strip-k { font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--px-dim); font-weight: 700; }
+.sk-activity-strip-v { color: var(--px-text); }
+.sk-activity-strip-sep { width: 1px; height: 18px; background: var(--px-border); margin: 0 6px; }
+
+/* The cursor overlay (shared .sk-cursor rule already defines size/transition).
+   Ensure it sits above the controls but ignores pointer events. */
+.ws-stage .sk-cursor { z-index: 20; pointer-events: none; }
+
+/* ---------- Responsive: stack preview below config when narrow ---------- */
+@media (max-width: 1100px) {
+  .workspace-main { grid-template-columns: 1fr; }
+  .ws-preview-frame { min-height: 300px; }
+  .sk-job-strip { flex-wrap: wrap; gap: 12px 22px; }
+}
+
+/* Cursor highlight for the availability + config-result targets (not .pc-field) */
+.pc-availability.hot,
+.pc-status.hot {
+  outline: 2px solid rgba(37, 99, 235, 0.6);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+.pc-availability.hot { padding: 2px 6px; margin: -2px -6px; }

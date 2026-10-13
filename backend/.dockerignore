@@ -1,0 +1,14 @@
+# Never copy local dev artifacts, secrets, or local storage into the image.
+node_modules
+npm-debug.log
+dist
+.env
+.env.*
+!.env.example
+_storage
+_work
+*.log
+.git
+.gitignore
+test
+coverage

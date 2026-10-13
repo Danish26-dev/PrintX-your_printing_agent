@@ -1,0 +1,16 @@
+# Never copy local dev artifacts or secrets into the image.
+# CRITICAL: strands-agent/.env contains AWS keys + Vertex config and must NEVER
+# be baked into the image. Vertex uses Application Default Credentials on Cloud
+# Run (the service account identity), so no .env is needed in the container.
+node_modules
+npm-debug.log
+dist
+.env
+.env.*
+!.env.example
+_work
+*.log
+.git
+.gitignore
+test
+coverage

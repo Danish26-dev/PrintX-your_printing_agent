@@ -1,0 +1,18 @@
+{
+  "name": "printx-local-printer-agent",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "PrintX local printer agent — runs on the shopkeeper's machine and exposes real printer discovery, availability, and job submission over localhost to the PrintX Backend. The browser and the cloud Backend cannot control a local printer directly; this agent is the trust boundary that does.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "start:dev": "node src/index.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "pdf-to-printer": "^5.6.0"
+  }
+}

@@ -1,0 +1,68 @@
+# PrintX — local multi-service composition.
+#
+#   frontend → backend → strands-agent → document-engine
+#
+# Service URLs are wired via environment variables using compose service names,
+# so no machine-specific paths or hardcoded hosts are needed. AWS credentials
+# are passed through from the host environment (never baked into images) and are
+# only required by the strands-agent for real Bedrock reasoning.
+#
+# Usage:
+#   # (optional) export AWS creds so the agent can reason with Bedrock:
+#   #   export AWS_ACCESS_KEY_ID=...  AWS_SECRET_ACCESS_KEY=...  AWS_REGION=...
+#   docker compose up --build
+
+services:
+  document-engine:
+    build: ./document-engine
+    container_name: printx-document-engine
+    environment:
+      - PORT=5001
+      - WORK_DIR=/app/_work
+      - SOFFICE_PATH=/usr/bin/soffice
+    ports:
+      - "5001:5001"
+
+  strands-agent:
+    build: ./strands-agent
+    container_name: printx-strands-agent
+    environment:
+      - PORT=4000
+      - DOCUMENT_ENGINE_URL=http://document-engine:5001
+      - AWS_REGION=${AWS_REGION:-us-east-1}
+      - BEDROCK_MODEL_ID=${BEDROCK_MODEL_ID:-global.anthropic.claude-sonnet-4-6}
+      - BEDROCK_TEMPERATURE=0
+      # Passed through from the host; required for real Bedrock reasoning.
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
+      - AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN:-}
+    ports:
+      - "4000:4000"
+    depends_on:
+      - document-engine
+
+  backend:
+    build: ./backend
+    container_name: printx-backend
+    environment:
+      - PORT=3001
+      - STRANDS_AGENT_URL=http://strands-agent:4000
+      - DOCUMENT_ENGINE_URL=http://document-engine:5001
+      - CORS_ORIGIN=*
+      - STORAGE_DIR=/app/_storage
+    ports:
+      - "3001:3001"
+    depends_on:
+      - strands-agent
+      - document-engine
+
+  frontend:
+    build: ./frontend
+    container_name: printx-frontend
+    environment:
+      # For the browser, the Backend is reached on the host-published port.
+      - REACT_APP_API_BASE_URL=http://localhost:3001
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend

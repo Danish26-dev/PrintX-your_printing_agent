@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Python
+document-engine/venv/
+**/__pycache__/
+*.pyc
+
+# Builds / output
+**/dist/
+frontend/build/
+
+# Runtime scratch / storage
+**/_work/
+**/_storage/
+
+# Env
+**/.env
+
+# Logs
+*.log
+
+# Leftover development clone (superseded by the flat structure)
+_printx_repo/
+_to_delete/
+
+# Legacy stray file
+gitignore.txt
+yarn.lock

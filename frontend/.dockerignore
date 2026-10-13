@@ -1,0 +1,13 @@
+# Never copy local dev artifacts or secrets into the image. The production
+# image builds the static bundle inside the Dockerfile, so a local ./build is
+# excluded to avoid shipping a stale one.
+node_modules
+npm-debug.log
+build
+.env
+.env.*
+!.env.example
+*.log
+.git
+.gitignore
+coverage

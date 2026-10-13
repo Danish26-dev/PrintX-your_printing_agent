@@ -1,4 +1,5 @@
 import { persistJob, removeJob, loadAllJobs } from './jobPersistence.js';
+import { resolveShopId } from './shop.js';
 
 /**
  * Job model + in-memory job store for the Backend control plane.
@@ -92,6 +93,13 @@ export interface PrintConfig {
 
 export interface Job {
   id: string;
+  /**
+   * The shop/channel this job belongs to. Every job is associated with a shop
+   * so the shopkeeper dashboard can reliably query its jobs. For the MVP this
+   * is always PrintX Lab ('printx-lab'); it is stamped server-side on create
+   * (defaulting + validating any client-supplied value) and is never null for
+   * a newly created job. Legacy jobs without one are treated as PrintX Lab. */
+  shopId: string;
   status: JobStatus;
   originalFilename: string;
   inputFormat: string;
@@ -168,6 +176,8 @@ export interface ProposedPrintSettings {
 /** Fields safe to return to the frontend (no storage keys, no paths). */
 export interface JobView {
   id: string;
+  /** The shop/channel this job belongs to (always set; PrintX Lab for the MVP). */
+  shopId: string;
   status: JobStatus;
   originalFilename: string;
   inputFormat: string;
@@ -193,6 +203,9 @@ export interface JobView {
 export function toView(job: Job): JobView {
   return {
     id: job.id,
+    // Resolve defensively so a legacy job persisted before shopId existed still
+    // surfaces a valid shop in the view (treated as PrintX Lab).
+    shopId: resolveShopId(job.shopId),
     status: job.status,
     originalFilename: job.originalFilename,
     inputFormat: job.inputFormat,
@@ -266,10 +279,15 @@ export class JobStore {
     inputFormat: string;
     inputFileReference: string;
     instruction?: string | null;
+    /** Shop/channel to associate the job with. Validated + defaulted to PrintX Lab. */
+    shopId?: string | null;
   }): Job {
     const now = new Date().toISOString();
     const job: Job = {
       id: init.id,
+      // Stamp the shop server-side: validate any supplied value and default to
+      // PrintX Lab. A job is NEVER left without a shop association.
+      shopId: resolveShopId(init.shopId ?? undefined),
       status: 'UPLOADED',
       originalFilename: init.originalFilename,
       inputFormat: init.inputFormat,
@@ -341,7 +359,16 @@ export class JobStore {
   async hydrate(): Promise<number> {
     const jobs = await loadAllJobs();
     for (const job of jobs) {
-      if (job && typeof job.id === 'string') this.jobs.set(job.id, job);
+      if (job && typeof job.id === 'string') {
+        // BACKFILL: jobs persisted before shopId existed load without one.
+        // Stamp them with the resolved shop (PrintX Lab) in memory so the
+        // dashboard query associates them correctly. This does not change job
+        // ids and does not delete any record. The mirror is updated lazily on
+        // the job's next write (we deliberately do not re-persist here to avoid
+        // a write storm at boot).
+        if (!job.shopId) job.shopId = resolveShopId(undefined);
+        this.jobs.set(job.id, job);
+      }
     }
     return jobs.length;
   }

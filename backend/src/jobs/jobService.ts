@@ -11,6 +11,7 @@ import { documentEngine, EngineClientError } from '../clients/documentEngineClie
 import type { StorageProvider } from '../storage/StorageProvider.js';
 import { createStorageProvider } from '../storage/storageFactory.js';
 import { jobStore, type Job, type PrintConfig, type PrintSettingsView } from './jobModel.js';
+import { resolveShopId, jobBelongsToShop, PRINTX_LAB_SHOP_ID } from './shop.js';
 import { newId, storageKey, checkFormat } from '../util/ids.js';
 import { printerAdapter, buildPrintConfig, type PrinterAdapter } from '../printing/PrinterAdapter.js';
 import { demoPrinterAdapter, DEMO_PRINTER_IDS } from '../printing/DemoPrinterAdapter.js';
@@ -36,6 +37,8 @@ export class JobService {
     originalFilename: string;
     mime: string;
     instruction?: string | null;
+    /** Shop/channel to associate the job with (validated; defaults to PrintX Lab). */
+    shopId?: string | null;
   }): Promise<Job> {
     const { fileBuffer, originalFilename, mime } = params;
 
@@ -57,6 +60,9 @@ export class JobService {
       inputFormat: fmt.ext!,
       inputFileReference: inputKey,
       instruction: params.instruction ?? null,
+      // Validate + default server-side (create() also resolves, but passing the
+      // candidate keeps the intent explicit at the service boundary).
+      shopId: resolveShopId(params.shopId ?? undefined),
     });
   }
 
@@ -255,10 +261,15 @@ export class JobService {
    * first. This is the smallest honest replacement for the old hardcoded
    * shopkeeper dashboard data.
    */
-  listJobs(): Job[] {
+  listJobs(shopId: string = PRINTX_LAB_SHOP_ID): Job[] {
+    const shop = resolveShopId(shopId);
     return jobStore
       .all()
       .filter((j) => j.status !== 'DELETED')
+      // Associate every job with a shop: a job belongs to the queried shop when
+      // its (resolved) shopId matches. Legacy jobs with no shopId resolve to
+      // PrintX Lab, so they still appear for the single MVP shop.
+      .filter((j) => jobBelongsToShop(j.shopId, shop))
       .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1));
   }
 
@@ -266,14 +277,14 @@ export class JobService {
    * Honest overview counts derived from real jobs. No revenue or fabricated
    * totals — only counts we can truthfully compute from the job store.
    */
-  overview(): {
+  overview(shopId: string = PRINTX_LAB_SHOP_ID): {
     activeJobs: number;
     completedJobs: number;
     pendingJobs: number;
     failedJobs: number;
     totalJobs: number;
   } {
-    const jobs = this.listJobs();
+    const jobs = this.listJobs(shopId);
     const inFlight = new Set([
       'PROCESSING',
       'CONFIGURING_PRINTER',

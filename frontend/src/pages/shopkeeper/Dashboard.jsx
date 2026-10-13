@@ -9,7 +9,7 @@ import {
   isAgentActive,
   getShopkeeper,
 } from '../../services/shopkeeperService';
-import { getOverview, getActiveJob, getRecentJobs } from '../../services/jobsService';
+import { fetchShopSnapshot, pickActiveJob } from '../../services/jobsService';
 import { getPrinterStatus, STATUS_LABELS } from '../../services/printerService';
 import { getSelectedDevice, subscribeSelectedDevice } from '../../services/selectedDeviceService';
 
@@ -48,6 +48,11 @@ const Dashboard = () => {
   const [activeJob, setActiveJob] = useState(null);
   const [recent, setRecent] = useState([]);
   const [printer, setPrinter] = useState({ name: 'Unknown', status: 'unknown', real: false });
+  // Connection state for the shop job feed. Lets us keep the last known jobs on
+  // a transient error (so the dashboard doesn't blank out) and tell the
+  // shopkeeper when the feed needs attention (e.g. expired sign-in).
+  const [feedError, setFeedError] = useState(null);
+  const [loadedOnce, setLoadedOnce] = useState(false);
   const [selectedDevice, setSelectedDevice] = useState(getSelectedDevice());
   const agentOn = isAgentActive();
   const isDemoSelected = selectedDevice?.mode === 'demo';
@@ -57,18 +62,24 @@ const Dashboard = () => {
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
-      const [ov, aj, rj, pr] = await Promise.all([
-        getOverview(),
-        getActiveJob(),
-        getRecentJobs(),
-        getPrinterStatus(),
-      ]);
-      if (!cancelled) {
-        setOverview(ov);
-        setActiveJob(aj);
-        setRecent(rj);
-        setPrinter(pr);
+      // Fetch the shop job feed (jobs + overview) and the printer status in
+      // parallel. The job feed is a single coordinated call that REPORTS errors
+      // instead of silently returning empty, so a dropped connection or an
+      // expired shopkeeper sign-in no longer looks like "no jobs".
+      const [snapshot, pr] = await Promise.all([fetchShopSnapshot(), getPrinterStatus()]);
+      if (cancelled) return;
+      setPrinter(pr);
+      if (snapshot.error) {
+        // Keep the LAST known jobs/overview on screen; surface the problem.
+        setFeedError(snapshot.error);
+        setLoadedOnce(true);
+        return;
       }
+      setFeedError(null);
+      setOverview(snapshot.overview);
+      setRecent(snapshot.jobs.slice(0, 8));
+      setActiveJob(pickActiveJob(snapshot.jobs));
+      setLoadedOnce(true);
     };
     load();
     const interval = setInterval(load, 3000);
@@ -77,6 +88,13 @@ const Dashboard = () => {
       clearInterval(interval);
     };
   }, []);
+
+  // A concise, honest banner message for the job-feed connection state.
+  const feedNotice = feedError
+    ? feedError.status === 401 || feedError.status === 403
+      ? 'Your shopkeeper session needs to be refreshed to load live jobs. Please sign in again.'
+      : 'Reconnecting to the live job feed…'
+    : null;
 
   const toggleAccepting = () => {
     const next = !accepting;
@@ -97,6 +115,27 @@ const Dashboard = () => {
       title={shopkeeper?.shopName || 'PrintX Lab'}
       subtitle="Operational overview"
     >
+      {/* Live job-feed connection notice. Shown only when the feed is failing;
+          the last known jobs stay on screen underneath so the dashboard never
+          blanks out on a transient error or an expired session. */}
+      {feedNotice && (
+        <div
+          role="status"
+          className="sk-feed-notice"
+          style={{
+            marginBottom: 12,
+            padding: '10px 14px',
+            borderRadius: 8,
+            background: 'rgba(245, 158, 11, 0.12)',
+            border: '1px solid rgba(245, 158, 11, 0.4)',
+            color: '#B45309',
+            fontSize: 14,
+          }}
+        >
+          {feedNotice}
+        </div>
+      )}
+
       {/* A. Order acceptance control */}
       <div className={`sk-order-control ${accepting ? 'online' : 'offline'}`}>
         <div className="sk-order-left">

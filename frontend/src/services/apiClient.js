@@ -151,18 +151,21 @@ export const api = {
   },
 
   /** Upload a file and (optionally) an instruction in one call → { job }. */
-  async createJob(file, instruction) {
+  async createJob(file, instruction, shopId) {
     const form = new FormData();
     form.append('file', file);
     if (instruction) form.append('instruction', instruction);
+    // Shop/channel association (validated + defaulted server-side to PrintX Lab).
+    if (shopId) form.append('shopId', shopId);
     const data = await request('/api/jobs', { method: 'POST', body: form });
     return data.job;
   },
 
   /** Upload a file without processing → { job } in UPLOADED state. */
-  async uploadFile(file) {
+  async uploadFile(file, shopId) {
     const form = new FormData();
     form.append('file', file);
+    if (shopId) form.append('shopId', shopId);
     const data = await request('/api/files/upload', { method: 'POST', body: form });
     return data.job;
   },

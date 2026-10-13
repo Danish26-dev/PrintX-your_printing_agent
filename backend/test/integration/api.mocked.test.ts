@@ -403,3 +403,50 @@ test('O. cleanup deletes files and marks DELETED (idempotent)', async () => {
   const dl = await fetch(`${base}/api/jobs/${id}/download`);
   assert.equal(dl.status, 409);
 });
+
+test('Q. every uploaded job is stamped with the PrintX Lab shop and shows on the shop feed', async () => {
+  // Simulates two DIFFERENT customers/sessions uploading. Both jobs must carry
+  // the PrintX Lab shopId and both must appear on the shopkeeper feed — the
+  // dashboard is no longer disconnected from the channel.
+  stubs.setAgentMode({ kind: 'execute', copies: 1, replacements: 1 });
+
+  // Customer 1: no shopId supplied -> defaults to PrintX Lab.
+  const c1 = await uploadJob('edit please');
+  const id1 = c1.body.job.id;
+  assert.equal(c1.body.job.shopId, 'printx-lab');
+
+  // Customer 2: explicitly selects PrintX Lab.
+  const form = new FormData();
+  const { makeDocx } = await import('../helpers/docxFixture.js');
+  const buf = await makeDocx('Someone Else');
+  form.set('file', new Blob([new Uint8Array(buf)]), 'doc2.docx');
+  form.set('instruction', 'edit please');
+  form.set('shopId', 'printx-lab');
+  const r2 = await fetch(`${base}/api/jobs`, { method: 'POST', body: form });
+  const b2 = (await r2.json()) as any;
+  const id2 = b2.job.id;
+  assert.equal(b2.job.shopId, 'printx-lab');
+
+  // The shopkeeper feed (AUTH_MODE=none in this test) returns BOTH jobs, each
+  // with its own shopId, under the PrintX Lab wrapper.
+  const feed = await (await fetch(`${base}/api/shop/jobs`)).json() as any;
+  assert.equal(feed.shopId, 'printx-lab');
+  const ids = feed.jobs.map((j: any) => j.id);
+  assert.ok(ids.includes(id1), 'customer 1 job is on the shop feed');
+  assert.ok(ids.includes(id2), 'customer 2 job is on the shop feed');
+  for (const j of feed.jobs) assert.equal(j.shopId, 'printx-lab');
+});
+
+test('Q2. a forged shopId is NOT trusted; the job is still associated with PrintX Lab', async () => {
+  stubs.setAgentMode({ kind: 'execute', copies: 1, replacements: 1 });
+  const form = new FormData();
+  const { makeDocx } = await import('../helpers/docxFixture.js');
+  const buf = await makeDocx('Forge Test');
+  form.set('file', new Blob([new Uint8Array(buf)]), 'forge.docx');
+  form.set('instruction', 'edit please');
+  form.set('shopId', 'totally-made-up-shop');
+  const r = await fetch(`${base}/api/jobs`, { method: 'POST', body: form });
+  const b = (await r.json()) as any;
+  // Server-side validation rejects the forged value and defaults to PrintX Lab.
+  assert.equal(b.job.shopId, 'printx-lab');
+});

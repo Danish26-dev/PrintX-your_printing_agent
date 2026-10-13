@@ -24,13 +24,22 @@ function toJobRow(job) {
   };
 }
 
-/** Real overview counts for PrintX Lab. Returns zeros if the Backend is down. */
+const EMPTY_OVERVIEW = { activeJobs: 0, completedJobs: 0, pendingJobs: 0, failedJobs: 0, totalJobs: 0 };
+
+/**
+ * Real overview counts for PrintX Lab.
+ *
+ * Returns zero counts on failure so the dashboard never crashes, but re-throws
+ * is avoided; instead callers that need to distinguish "backend/auth error"
+ * from "genuinely no jobs" should use `fetchShopSnapshot()` which reports the
+ * error. Kept for backward compatibility with existing callers.
+ */
 export async function getOverview() {
   try {
     const { overview } = await api.shopOverview();
     return overview;
   } catch {
-    return { activeJobs: 0, completedJobs: 0, pendingJobs: 0, failedJobs: 0, totalJobs: 0 };
+    return { ...EMPTY_OVERVIEW };
   }
 }
 
@@ -44,18 +53,55 @@ export async function getJobs() {
   }
 }
 
+/**
+ * Fetch BOTH the job list and overview in one call, and REPORT any error
+ * instead of silently collapsing it into an empty dashboard.
+ *
+ * This is the reliability fix: previously a 401/403 (expired shopkeeper token)
+ * or a transient network error was swallowed and rendered identically to
+ * "no jobs", so the shopkeeper saw an empty dashboard with no explanation.
+ * The dashboard polls this on an interval; when `error` is set it can show a
+ * "reconnecting / sign-in required" state and keep the LAST known jobs instead
+ * of blanking them. Returns:
+ *   { jobs, overview, error }  where error is null on success or an
+ *   { code, status, message } object on failure.
+ */
+export async function fetchShopSnapshot() {
+  try {
+    const [{ jobs }, { overview }] = await Promise.all([api.shopJobs(), api.shopOverview()]);
+    return { jobs: jobs.map(toJobRow), overview, error: null };
+  } catch (err) {
+    return {
+      jobs: null,
+      overview: null,
+      error: {
+        code: err?.code || 'UNKNOWN',
+        status: err?.status,
+        message: err?.message || 'Could not reach PrintX right now.',
+      },
+    };
+  }
+}
+
+const IN_FLIGHT = new Set([
+  'PROCESSING',
+  'CONFIGURING_PRINTER',
+  'READY_FOR_PREVIEW',
+  'READY_FOR_APPROVAL',
+  'APPROVED',
+  'NEEDS_CLARIFICATION',
+]);
+
+/** The most recent in-flight job from a list (or null). Pure helper. */
+export function pickActiveJob(jobs) {
+  if (!Array.isArray(jobs)) return null;
+  return jobs.find((j) => IN_FLIGHT.has(j.status)) || null;
+}
+
 /** The most recent in-flight job, or null when there is none. */
 export async function getActiveJob() {
   const jobs = await getJobs();
-  const inFlight = new Set([
-    'PROCESSING',
-    'CONFIGURING_PRINTER',
-    'READY_FOR_PREVIEW',
-    'READY_FOR_APPROVAL',
-    'APPROVED',
-    'NEEDS_CLARIFICATION',
-  ]);
-  return jobs.find((j) => inFlight.has(j.status)) || null;
+  return pickActiveJob(jobs);
 }
 
 /** Recent jobs for the dashboard table (real). */

@@ -23,6 +23,7 @@ import { jobStore, toView, type JobView } from '../jobs/jobModel.js';
 import { printerAdapter } from '../printing/PrinterAdapter.js';
 import { DEMO_PRINTER, DEMO_PRINTERS } from '../printing/DemoPrinterAdapter.js';
 import { requireShopkeeper } from '../middleware/requireShopkeeper.js';
+import { PRINTX_LAB_SHOP_ID, resolveShopId } from '../jobs/shop.js';
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -63,6 +64,8 @@ router.post('/files/upload', upload.single('file'), async (req: Request, res: Re
       originalFilename: req.file.originalname || 'upload',
       mime: req.file.mimetype || '',
       instruction: null,
+      // Associate with the selected shop (validated; defaults to PrintX Lab).
+      shopId: resolveShopId(req.body?.shopId),
     });
     res.status(201).json({ job: toView(job) });
   } catch (err) {
@@ -83,6 +86,8 @@ router.post('/jobs', upload.single('file'), async (req: Request, res: Response, 
       originalFilename: req.file.originalname || 'upload',
       mime: req.file.mimetype || '',
       instruction: instruction || null,
+      // Associate with the selected shop (validated; defaults to PrintX Lab).
+      shopId: resolveShopId(req.body?.shopId),
     });
 
     if (instruction.trim()) {
@@ -346,7 +351,11 @@ router.delete('/jobs/:id', requireShopkeeper, async (req: Request, res: Response
  */
 router.get('/shop/jobs', requireShopkeeper, (_req: Request, res: Response, next: NextFunction) => {
   try {
-    res.json({ shopId: 'printx-lab', jobs: jobService.listJobs().map(toView) });
+    // The dashboard queries the single MVP shop. listJobs filters by this shop
+    // id so every PrintX Lab job (including legacy jobs with no stored shopId)
+    // is returned, and the wrapper shopId matches each job's own shopId.
+    const shopId = PRINTX_LAB_SHOP_ID;
+    res.json({ shopId, jobs: jobService.listJobs(shopId).map(toView) });
   } catch (err) {
     next(err);
   }
@@ -358,7 +367,8 @@ router.get('/shop/jobs', requireShopkeeper, (_req: Request, res: Response, next:
  */
 router.get('/shop/overview', requireShopkeeper, (_req: Request, res: Response, next: NextFunction) => {
   try {
-    res.json({ shopId: 'printx-lab', overview: jobService.overview() });
+    const shopId = PRINTX_LAB_SHOP_ID;
+    res.json({ shopId, overview: jobService.overview(shopId) });
   } catch (err) {
     next(err);
   }

@@ -328,7 +328,7 @@ const ChatInterface = ({ selectedShop, messages, setMessages, onFileUpload, onJo
     if (!file) return;
     setUploading(true);
     try {
-      const uploaded = await uploadFile(file); // REAL upload -> real job
+      const uploaded = await uploadFile(file, selectedShop?.id); // REAL upload -> real job (shop-scoped)
       setActiveJobId(uploaded.jobId);
       // Seed the conversation state machine with the freshly uploaded job so
       // the first follow-up message is routed against a real status.

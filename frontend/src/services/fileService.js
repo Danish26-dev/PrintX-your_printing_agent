@@ -9,8 +9,11 @@ import { api, ApiError } from './apiClient';
  * Returns a UI-friendly object that preserves the shape the existing
  * components expect (id/name/size/type/status), plus the real backend job.
  */
-export const uploadFile = async (file) => {
-  const job = await api.createJob(file); // UPLOADED (no instruction)
+export const uploadFile = async (file, shopId) => {
+  // Associate the job with the selected shop (PrintX Lab). The backend
+  // validates + defaults this; sending it keeps the customer job on the same
+  // channel the shopkeeper dashboard queries.
+  const job = await api.createJob(file, undefined, shopId); // UPLOADED (no instruction)
 
   // Build a client-side object URL from the ACTUAL uploaded bytes so the
   // "Uploaded" preview tab can render the real document (PDF/image) the user

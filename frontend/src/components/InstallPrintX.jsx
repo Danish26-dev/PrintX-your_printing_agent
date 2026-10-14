@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Download, Share, Plus, X, Check } from 'lucide-react';
+import { Download, Share, Plus, X, Check, MoreVertical } from 'lucide-react';
 import {
   installMode,
   promptInstall,
@@ -22,6 +22,7 @@ import '../styles/install.css';
 const InstallPrintX = ({ variant = 'solid', className = '' }) => {
   const [mode, setMode] = useState(() => installMode());
   const [iosOpen, setIosOpen] = useState(false);
+  const [androidOpen, setAndroidOpen] = useState(false);
   const [installed, setInstalled] = useState(false);
 
   useEffect(() => {
@@ -38,6 +39,22 @@ const InstallPrintX = ({ variant = 'solid', className = '' }) => {
   const handleClick = async () => {
     if (mode === 'ios') {
       setIosOpen(true);
+      return;
+    }
+    if (mode === 'android') {
+      // A native prompt may have arrived since first render; prefer it.
+      const outcome = await promptInstall();
+      if (outcome === 'accepted') {
+        setInstalled(true);
+        setMode(installMode());
+        return;
+      }
+      if (outcome === 'dismissed') {
+        setMode(installMode());
+        return;
+      }
+      // No native prompt available on this Android browser -> show steps.
+      setAndroidOpen(true);
       return;
     }
     if (mode === 'prompt') {
@@ -64,7 +81,7 @@ const InstallPrintX = ({ variant = 'solid', className = '' }) => {
         type="button"
         className={`install-printx ${variant} ${className}`}
         onClick={handleClick}
-        aria-haspopup={mode === 'ios' ? 'dialog' : undefined}
+        aria-haspopup={mode === 'ios' || mode === 'android' ? 'dialog' : undefined}
       >
         <Download size={18} />
         <span>Install PrintX</span>
@@ -101,6 +118,42 @@ const InstallPrintX = ({ variant = 'solid', className = '' }) => {
             </ol>
             <p className="install-ios-note">
               This option is available in Safari. Some in-app browsers don’t support it.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {androidOpen && (
+        <div
+          className="install-ios-backdrop"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Install PrintX on Android"
+          onClick={() => setAndroidOpen(false)}
+        >
+          <div className="install-ios-sheet" onClick={(e) => e.stopPropagation()}>
+            <div className="install-ios-head">
+              <h3>Add PrintX to your Home Screen</h3>
+              <button className="install-ios-close" onClick={() => setAndroidOpen(false)} aria-label="Close">
+                <X size={18} />
+              </button>
+            </div>
+            <p className="install-ios-sub">
+              On Android, install PrintX from the browser menu:
+            </p>
+            <ol className="install-ios-steps">
+              <li>
+                <MoreVertical size={16} /> Tap the <strong>⋮ menu</strong> in Chrome’s toolbar.
+              </li>
+              <li>
+                <Plus size={16} /> Choose <strong>Install app</strong> or <strong>Add to Home screen</strong>.
+              </li>
+              <li>
+                <Check size={16} /> Tap <strong>Install</strong> — PrintX appears on your Home Screen.
+              </li>
+            </ol>
+            <p className="install-ios-note">
+              Open PrintX in Chrome for the full install option. Some in-app browsers don’t support it.
             </p>
           </div>
         </div>

@@ -26,6 +26,13 @@ export function isIos() {
   return iOSDevice && isSafari;
 }
 
+/** True for an Android browser (where a Chromium menu "Install"/"Add to Home
+ *  screen" path exists even when beforeinstallprompt hasn't fired yet). */
+export function isAndroid() {
+  if (typeof navigator === 'undefined') return false;
+  return /Android/.test(navigator.userAgent || '');
+}
+
 // Module-level holder for the deferred native prompt (fired before React mounts
 // in some browsers, so we start listening immediately on import).
 let deferredPrompt = null;
@@ -86,13 +93,17 @@ export function subscribeInstall(fn) {
 
 /**
  * The install affordance the UI should show right now:
- *   'prompt'  -> a working native-prompt button
+ *   'prompt'  -> a working native-prompt button (Chromium fired beforeinstallprompt)
  *   'ios'     -> iOS Share -> Add to Home Screen instructions
- *   'none'    -> nothing (installed, or unsupported) — never a fake button
+ *   'android' -> Android Chromium menu -> Install app / Add to Home screen steps
+ *                (shown when the native prompt hasn't fired yet, so the option
+ *                is still present on mobile instead of silently missing)
+ *   'none'    -> nothing (already installed) — never a fake button
  */
 export function installMode() {
   if (isStandalone()) return 'none';
   if (canPromptInstall()) return 'prompt';
   if (isIos()) return 'ios';
+  if (isAndroid()) return 'android';
   return 'none';
 }

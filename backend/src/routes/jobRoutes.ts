@@ -224,7 +224,14 @@ router.post('/jobs/:id/approve', (req: Request, res: Response, next: NextFunctio
  * against them, checks availability, and records verified settings + warnings.
  * It does NOT submit. (Shopkeeper-authorized action.)
  */
-router.post('/jobs/:id/configure-printer', requireShopkeeper, async (req: Request, res: Response, next: NextFunction) => {
+// NOTE: configure-printer is PUBLIC (customer action), like /approve. It is the
+// customer handing their APPROVED document to PrintX Lab and having the print
+// settings VERIFIED against the shop's printer. It commands NO physical
+// hardware — it only validates settings and moves the job to
+// READY_FOR_APPROVAL. The genuinely shop-only, hardware-touching steps
+// (submit-print, legacy print, delete) remain requireShopkeeper. Gating this
+// step broke the customer's "send to print shop" flow with a 401.
+router.post('/jobs/:id/configure-printer', async (req: Request, res: Response, next: NextFunction) => {
   const id = requireValidJobId(req, res);
   if (!id) return;
   try {

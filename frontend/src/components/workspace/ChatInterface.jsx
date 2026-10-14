@@ -262,7 +262,15 @@ const ChatInterface = ({ selectedShop, messages, setMessages, onFileUpload, onJo
     setIsTyping(true);
 
     try {
-      await approveJob(jobId); // READY_FOR_PREVIEW -> APPROVED (real)
+      // READY_FOR_PREVIEW -> APPROVED. If a previous attempt already approved
+      // (job now APPROVED/PRINT_FAILED), approve() returns INVALID_STATE — that
+      // is fine, we proceed straight to (re)configuration on the same job. Only
+      // a genuinely unexpected error aborts.
+      try {
+        await approveJob(jobId);
+      } catch (approveErr) {
+        if (!(approveErr instanceof ApiError) || approveErr.code !== 'INVALID_STATE') throw approveErr;
+      }
       // Forward the agent's parsed print options (colour/paper/orientation/
       // sides/copies) so the real printer is configured per the customer's
       // request — not hardcoded defaults.

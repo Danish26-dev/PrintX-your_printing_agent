@@ -45,6 +45,15 @@ export interface BackendConfig {
   printerAgentUrl: string;
   /** Optional shared token the local printer agent requires. */
   printerAgentToken: string;
+  /**
+   * Default printer mode when a configure request does NOT explicitly choose
+   * one and the proposed printerId is not a demo id. 'real' (default) preserves
+   * the production guarantee of no silent real->demo fallback. 'demo' makes the
+   * hardware-free demo deployment work end to end: a customer "send to print
+   * shop" with no shopkeeper device selected uses the simulated demo adapter
+   * instead of failing with NO_PRINTER. This is an EXPLICIT, env-gated choice —
+   * never an implicit fallback triggered by a discovery failure. */
+  defaultPrinterMode: 'real' | 'demo';
   /** Timeout for calls to the local printer agent. */
   printerAgentTimeoutMs: number;
   /**
@@ -110,5 +119,6 @@ export const config: BackendConfig = {
   printerAgentUrl: stripSlash(process.env.PRINTER_AGENT_URL ?? ''),
   printerAgentToken: (process.env.PRINTER_AGENT_TOKEN ?? '').trim(),
   printerAgentTimeoutMs: parseInt(process.env.PRINTER_AGENT_TIMEOUT_MS ?? '20000', 10),
+  defaultPrinterMode: (process.env.DEFAULT_PRINTER_MODE ?? 'real').trim() === 'demo' ? 'demo' : 'real',
   shopkeeperApiToken: (process.env.SHOPKEEPER_API_TOKEN ?? '').trim(),
 };

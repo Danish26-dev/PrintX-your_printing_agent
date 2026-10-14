@@ -353,15 +353,20 @@ export class JobService {
    * Resolve the printer mode for a configure request. The mode is EXPLICIT:
    *   - caller passes mode: 'demo' | 'real', OR
    *   - the proposed printerId is the demo id -> 'demo',
-   *   - otherwise 'real'.
-   * Never infers demo from a real-discovery failure.
+   *   - otherwise the CONFIGURED default (config.defaultPrinterMode).
+   *
+   * The default is 'real' in production (preserving the guarantee of no silent
+   * real->demo fallback on a discovery failure). A hardware-free demo
+   * deployment sets DEFAULT_PRINTER_MODE=demo so a customer "send to print
+   * shop" with no device selected uses the simulated demo adapter. This is an
+   * explicit, env-gated choice — NOT a fallback inferred from a failure.
    */
   private resolveMode(proposedObj: Record<string, unknown>, requested?: PrinterMode): PrinterMode {
     if (requested === 'demo' || requested === 'real') return requested;
     // Recognise ANY demo device id (there can be more than one selectable demo
     // printer), not only the primary one.
     if (typeof proposedObj.printerId === 'string' && DEMO_PRINTER_IDS.has(proposedObj.printerId)) return 'demo';
-    return 'real';
+    return config.defaultPrinterMode;
   }
 
   async configurePrinter(jobId: string, proposed: unknown, requestedMode?: PrinterMode): Promise<Job> {

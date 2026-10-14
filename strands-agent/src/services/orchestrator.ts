@@ -200,20 +200,36 @@ function isThrottle(err: unknown): boolean {
 
 /**
  * Run an agent invocation with a BOUNDED retry/backoff that triggers ONLY on
- * throttling (429). Max 2 retries with exponential backoff. Non-throttle errors
- * propagate immediately. This never loops indefinitely.
+ * throttling (429 / RESOURCE_EXHAUSTED). Non-throttle errors propagate
+ * immediately. This never loops indefinitely.
+ *
+ * Backoff is longer than the original 1.5s/4s because Vertex per-minute rate
+ * limits (requests- or tokens-per-minute) hold for a window that short retries
+ * cannot outlast — causing intermittent edit failures under repeated use (seen
+ * most on the heavier PDF edit path). The schedule below (default 5s, 12s, 20s,
+ * 30s) rides out a throttle window while staying well within the agent->engine
+ * (165s) and backend->agent (290s) budgets. Tunable via env without a redeploy:
+ *   AGENT_THROTTLE_RETRIES (default 4)
+ *   AGENT_THROTTLE_DELAYS_MS (comma list, default "5000,12000,20000,30000")
  */
-async function withThrottleRetry<T>(fn: () => Promise<T>, maxRetries = 2): Promise<T> {
+const THROTTLE_DELAYS: number[] = (process.env.AGENT_THROTTLE_DELAYS_MS ?? '5000,12000,20000,30000')
+  .split(',')
+  .map((s) => parseInt(s.trim(), 10))
+  .filter((n) => Number.isFinite(n) && n > 0);
+
+const THROTTLE_MAX_RETRIES = Number.isFinite(Number(process.env.AGENT_THROTTLE_RETRIES))
+  ? Math.max(0, parseInt(process.env.AGENT_THROTTLE_RETRIES as string, 10))
+  : 4;
+
+async function withThrottleRetry<T>(fn: () => Promise<T>, maxRetries = THROTTLE_MAX_RETRIES): Promise<T> {
   let attempt = 0;
-  // 1.5s, then 4s — short, bounded, and only on 429.
-  const delays = [1500, 4000];
   // eslint-disable-next-line no-constant-condition
   while (true) {
     try {
       return await fn();
     } catch (err) {
       if (attempt < maxRetries && isThrottle(err)) {
-        const wait = delays[attempt] ?? 4000;
+        const wait = THROTTLE_DELAYS[attempt] ?? THROTTLE_DELAYS[THROTTLE_DELAYS.length - 1] ?? 5000;
         // eslint-disable-next-line no-console
         console.warn(`[agent] Vertex throttled (429); retrying in ${wait}ms (attempt ${attempt + 1}/${maxRetries})`);
         await new Promise((r) => setTimeout(r, wait));

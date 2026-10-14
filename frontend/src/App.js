@@ -5,6 +5,14 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Workspace from "./pages/Workspace";
 
+// Public content pages (landing/marketing — no app logic)
+import PrivacyPage from "./pages/public/PrivacyPage";
+import TermsPage from "./pages/public/TermsPage";
+import AboutPage from "./pages/public/AboutPage";
+import ContactPage from "./pages/public/ContactPage";
+import HowItWorksPage from "./pages/public/HowItWorksPage";
+import SecurityPage from "./pages/public/SecurityPage";
+
 // Shopkeeper pages
 import ShopkeeperLogin from "./pages/ShopkeeperLogin";
 import ShopkeeperDashboard from "./pages/shopkeeper/Dashboard";
@@ -57,6 +65,14 @@ function App() {
               </RequireShopkeeperAuth>
             }
           />
+
+          {/* ---------- Public content pages (marketing/legal) ---------- */}
+          <Route path="/how-it-works" element={<HowItWorksPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/security" element={<SecurityPage />} />
 
           {/* ---------- Legacy path redirects ---------- */}
           <Route path="/shopkeeper-login" element={<Navigate to="/shopkeeper/login" replace />} />

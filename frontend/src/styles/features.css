@@ -155,3 +155,26 @@
     height: 220px;
   }
 }
+
+/* ---- Compact feature cards (no stock imagery; honest, product-only) ---- */
+.feature-card--compact {
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-card--compact .feature-content {
+  padding: 28px;
+}
+
+.feature-icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  margin-bottom: 18px;
+  color: #fff;
+  background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.25);
+}

@@ -1,0 +1,19 @@
+# PrintX robots.txt
+# Public marketing/content pages are crawlable. The authenticated shopkeeper
+# area and the customer job workspace are not useful to index.
+
+User-agent: *
+Allow: /
+Allow: /how-it-works
+Allow: /about
+Allow: /contact
+Allow: /privacy
+Allow: /terms
+Allow: /security
+Disallow: /workspace
+Disallow: /shop/
+Disallow: /shopkeeper/
+
+# Replace with the production URL at deploy time:
+# Sitemap: https://your-domain.example/sitemap.xml
+Sitemap: /sitemap.xml

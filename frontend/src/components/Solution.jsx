@@ -1,5 +1,5 @@
 import React from 'react';
-import { Upload, Brain, Printer, Trash2, CheckCircle } from 'lucide-react';
+import { Upload, MessageSquare, Eye, CheckCircle, Printer } from 'lucide-react';
 import '../styles/solution.css';
 
 const Solution = () => {
@@ -7,33 +7,33 @@ const Solution = () => {
     {
       icon: <Upload size={32} />,
       title: 'Upload',
-      description: 'Securely upload documents through encrypted channels',
-      status: 'active'
+      description: 'Send a PDF or DOCX to PrintX Lab from your browser or phone.',
+      status: 'active',
     },
     {
-      icon: <Brain size={32} />,
-      title: 'AI Understands',
-      description: 'AI agent analyzes and interprets your instructions',
-      status: 'active'
+      icon: <MessageSquare size={32} />,
+      title: 'Describe',
+      description: 'Tell PrintX the edits and print settings in plain language.',
+      status: 'active',
     },
     {
-      icon: <Printer size={32} />,
-      title: 'Smart Edit & Print',
-      description: 'Automated editing and print-ready file preparation',
-      status: 'active'
+      icon: <Eye size={32} />,
+      title: 'Preview',
+      description: 'PrintX prepares the document and shows you a preview to review.',
+      status: 'active',
     },
     {
       icon: <CheckCircle size={32} />,
-      title: 'Execute',
-      description: 'Print job completed with quality assurance',
-      status: 'active'
+      title: 'Approve',
+      description: 'Confirm the result and send the job to the shop for printing.',
+      status: 'active',
     },
     {
-      icon: <Trash2 size={32} />,
-      title: 'Auto Delete',
-      description: 'Files permanently deleted for privacy',
-      status: 'completed'
-    }
+      icon: <Printer size={32} />,
+      title: 'Print',
+      description: 'The shop receives the job and completes the configured print workflow.',
+      status: 'completed',
+    },
   ];
 
   return (
@@ -42,11 +42,12 @@ const Solution = () => {
         <div className="section-header">
           <span className="section-label">The Solution</span>
           <h2 className="section-title">
-            Autonomous AI workflow <br />
-            <span className="text-gradient">from upload to deletion</span>
+            One guided workflow <br />
+            <span className="text-gradient">from upload to print</span>
           </h2>
           <p className="section-description">
-            PrintX handles everything automatically while maintaining enterprise-grade security
+            PrintX turns document preparation and print instructions into a single, reviewable flow
+            — for both the customer and the shop.
           </p>
         </div>
 
@@ -54,11 +55,9 @@ const Solution = () => {
           {steps.map((step, index) => (
             <div key={index} className="timeline-step" style={{ animationDelay: `${index * 0.15}s` }}>
               <div className="step-connector">
-                <div className={`step-icon-wrapper ${step.status}`}>
-                  {step.icon}
-                </div>
+                <div className={`step-icon-wrapper ${step.status}`}>{step.icon}</div>
               </div>
-              
+
               <div className="step-content">
                 <h3 className="step-title">{step.title}</h3>
                 <p className="step-description">{step.description}</p>

@@ -158,3 +158,16 @@
     text-align: center;
   }
 }
+
+/* ---- Footer CTA + note (added for the honest SaaS footer) ---- */
+.footer-cta {
+  margin-top: 18px;
+  padding: 10px 22px;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+.footer-note {
+  color: #6B7280;
+  font-size: 13px;
+}

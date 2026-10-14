@@ -1,0 +1,217 @@
+/* Shared styling for PrintX public content pages (privacy, terms, about,
+   contact, how-it-works, security). Matches the dark premium brand. */
+
+.pubpage {
+  min-height: 100vh;
+  background: #0B0F19;
+  color: #E5E7EB;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.pubpage-main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 120px 24px 96px;
+}
+
+.pubpage-wide {
+  max-width: 1120px;
+}
+
+.pubpage-eyebrow {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: #7C3AED;
+  margin-bottom: 14px;
+}
+
+.pubpage-title {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 16px;
+  letter-spacing: -0.5px;
+}
+
+.pubpage-lede {
+  font-size: 18px;
+  line-height: 1.7;
+  color: #9CA3AF;
+  margin: 0 0 20px;
+  max-width: 680px;
+}
+
+.pubpage-meta {
+  font-size: 14px;
+  color: #6B7280;
+  margin-bottom: 40px;
+}
+
+.pubpage h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 44px 0 14px;
+  color: #F3F4F6;
+}
+
+.pubpage h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 26px 0 10px;
+  color: #E5E7EB;
+}
+
+.pubpage p,
+.pubpage li {
+  font-size: 16px;
+  line-height: 1.75;
+  color: #B6C0CE;
+}
+
+.pubpage ul {
+  padding-left: 22px;
+  margin: 12px 0;
+}
+
+.pubpage li {
+  margin-bottom: 8px;
+}
+
+.pubpage a.inline-link {
+  color: #8B9CFF;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.pubpage-gradient {
+  background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Card grid used by how-it-works / security / about sections. */
+.pubpage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin: 28px 0;
+}
+
+.pubpage-card {
+  background: rgba(148, 163, 184, 0.05);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.pubpage-card .card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  color: #fff;
+  background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+}
+
+.pubpage-card h3 {
+  margin: 0 0 8px;
+}
+
+.pubpage-card p {
+  margin: 0;
+  font-size: 15px;
+}
+
+.pubpage-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 36px;
+}
+
+.pubpage-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+}
+
+.pubpage-btn.primary {
+  color: #fff;
+  background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+  box-shadow: 0 8px 22px rgba(124, 58, 237, 0.3);
+}
+
+.pubpage-btn.ghost {
+  color: #E5E7EB;
+  background: transparent;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.pubpage-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Simple two-column compare (traditional vs PrintX) */
+.pubpage-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin: 28px 0;
+}
+
+@media (max-width: 640px) {
+  .pubpage-compare {
+    grid-template-columns: 1fr;
+  }
+  .pubpage-main {
+    padding-top: 100px;
+  }
+}
+
+/* Contact form (non-wired placeholder — mailto fallback) */
+.pubform {
+  display: grid;
+  gap: 16px;
+  margin-top: 28px;
+  max-width: 560px;
+}
+
+.pubform label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #CBD5E1;
+  margin-bottom: 6px;
+}
+
+.pubform input,
+.pubform textarea,
+.pubform select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(148, 163, 184, 0.06);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  color: #E5E7EB;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+.pubform textarea {
+  min-height: 120px;
+  resize: vertical;
+}

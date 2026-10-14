@@ -1,7 +1,7 @@
 {
-  "name": "PrintX",
+  "name": "PrintX — Intelligent Printing, Simplified",
   "short_name": "PrintX",
-  "description": "AI-powered document editing and printing for local print shops. Upload a document, describe the changes, review the edited preview, and send it to the shop.",
+  "description": "PrintX connects customers with print shops through an AI-powered document and printing workflow. Upload a document, describe the edits and print settings in plain language, review the prepared preview, and send it to the shop.",
   "lang": "en",
   "dir": "ltr",
   "start_url": "/?source=pwa",

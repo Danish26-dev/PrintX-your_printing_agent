@@ -20,15 +20,24 @@ export function register() {
     navigator.serviceWorker
       .register(SW_URL, { scope: '/' })
       .then((registration) => {
-        // When a new worker is found, let it install; it will take over on the
-        // next navigation. We do NOT force-reload (which could interrupt an
-        // in-progress upload/edit).
+        // Check for an updated worker immediately on load (so a returning
+        // visitor / installed PWA picks up a new deploy promptly instead of
+        // being stuck on a stale app shell that may point at an old backend
+        // URL — the cause of "No demo devices" / "Reconnecting" after a deploy).
+        registration.update().catch(() => {});
+
+        // When a new worker finishes installing AND an old one is already in
+        // control, an update is ready. Tell it to activate now (SKIP_WAITING);
+        // the controllerchange handler below then reloads ONCE to load the
+        // fresh shell. A first-ever install has no existing controller, so this
+        // never reloads on the initial visit.
         registration.addEventListener('updatefound', () => {
           const installing = registration.installing;
           if (!installing) return;
           installing.addEventListener('statechange', () => {
-            // 'installed' with an existing controller => an update is ready.
-            // It activates on the next load; no disruptive auto-reload here.
+            if (installing.state === 'installed' && navigator.serviceWorker.controller) {
+              installing.postMessage('SKIP_WAITING');
+            }
           });
         });
       })
@@ -36,6 +45,16 @@ export function register() {
         // Registration failure must never break the app; it just means no
         // offline shell this session.
       });
+
+    // When the active worker changes (because a waiting one took over via
+    // SKIP_WAITING), reload exactly once to swap to the fresh bundle. Guarded so
+    // it cannot loop.
+    let reloaded = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (reloaded) return;
+      reloaded = true;
+      window.location.reload();
+    });
   });
 }
 

@@ -19,7 +19,13 @@
  * app's existing honest network error (the user can retry manually).
  */
 
-const CACHE = 'printx-static-v1';
+// Bump this version on any change that must invalidate the cached app shell
+// (e.g. a new backend URL baked into the bundle). The 'activate' handler
+// deletes every cache whose key !== CACHE, so bumping it purges the OLD
+// precached index.html + static assets and forces a fresh fetch. This is what
+// prevents an installed PWA / returning visitor from being stuck on a stale
+// bundle that still points at the old backend URL.
+const CACHE = 'printx-static-v2';
 
 // App-shell assets safe to precache at install.
 const PRECACHE_URLS = [

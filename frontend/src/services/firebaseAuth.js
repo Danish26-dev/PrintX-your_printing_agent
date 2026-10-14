@@ -13,7 +13,7 @@
 // dependency installed still compiles; it is only needed where Google Sign-In
 // is actually used.
 
-import { setFirebaseIdToken } from './apiClient';
+import { setFirebaseIdToken, setFirebaseTokenProvider } from './apiClient';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -108,10 +108,37 @@ export function onShopkeeperAuth(cb) {
 export async function currentIdToken() {
   if (!isConfigured()) return '';
   try {
-    const { auth } = await getAuth();
+    const { auth, authMod } = await getAuth();
+    // Wait for Firebase to restore the persisted session on a fresh page load
+    // before reading currentUser — otherwise it is briefly null right after
+    // reload and we would hand back an empty token (the dashboard 401 race).
+    if (!auth.currentUser) {
+      await new Promise((resolve) => {
+        let settled = false;
+        const done = () => {
+          if (settled) return;
+          settled = true;
+          resolve();
+        };
+        const unsub = authMod.onAuthStateChanged(auth, () => {
+          unsub();
+          done();
+        });
+        // Safety timeout so we never hang if there is genuinely no session.
+        setTimeout(done, 3000);
+      });
+    }
     const user = auth.currentUser;
     return user ? await user.getIdToken() : '';
   } catch {
     return '';
   }
+}
+
+// Register the on-demand token provider with the apiClient as soon as this
+// module loads. When Firebase is configured, every shopkeeper request can then
+// obtain a currently-valid ID token even if the onIdTokenChanged listener has
+// not yet pushed one into the cache (post-reload) or the cached one expired.
+if (isConfigured()) {
+  setFirebaseTokenProvider(() => currentIdToken());
 }

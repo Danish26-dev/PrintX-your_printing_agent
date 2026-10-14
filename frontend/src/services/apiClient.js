@@ -80,6 +80,13 @@ function friendly(code, fallback) {
 // Neither is ever logged.
 let SHOPKEEPER_TOKEN = (process.env.REACT_APP_SHOPKEEPER_API_TOKEN || '').trim();
 let FIREBASE_ID_TOKEN = '';
+// An ON-DEMAND provider that returns a FRESH Firebase ID token (or '').
+// Registered by firebaseAuth at startup. This is the fix for the dashboard
+// 401 race: the dashboard mounts and polls before the onIdTokenChanged
+// listener has pushed the token into FIREBASE_ID_TOKEN after a reload, and the
+// cached token also expires after ~1h. Fetching on demand guarantees every
+// shopkeeper request carries a currently-valid token.
+let FIREBASE_TOKEN_PROVIDER = null;
 export function setShopkeeperToken(token) {
   SHOPKEEPER_TOKEN = (token || '').trim();
 }
@@ -87,10 +94,39 @@ export function setShopkeeperToken(token) {
 export function setFirebaseIdToken(token) {
   FIREBASE_ID_TOKEN = (token || '').trim();
 }
-/** Headers for a shopkeeper-only request (prefers the Firebase ID token). */
-function shopkeeperHeaders(extra = {}) {
+/**
+ * Register an async getter that returns a fresh Firebase ID token (or '').
+ * Called once by firebaseAuth. Lets the apiClient obtain a valid token even
+ * when the cached one isn't set yet (post-reload race) or has expired.
+ */
+export function setFirebaseTokenProvider(fn) {
+  FIREBASE_TOKEN_PROVIDER = typeof fn === 'function' ? fn : null;
+}
+
+/** Resolve the best available Firebase ID token: cached first, else on demand. */
+async function resolveFirebaseToken() {
+  if (FIREBASE_ID_TOKEN) return FIREBASE_ID_TOKEN;
+  if (FIREBASE_TOKEN_PROVIDER) {
+    try {
+      const t = (await FIREBASE_TOKEN_PROVIDER()) || '';
+      if (t) FIREBASE_ID_TOKEN = t.trim();
+      return FIREBASE_ID_TOKEN;
+    } catch {
+      return '';
+    }
+  }
+  return '';
+}
+
+/**
+ * Headers for a shopkeeper-only request (prefers the Firebase ID token).
+ * ASYNC: it will fetch a fresh token on demand when none is cached, closing the
+ * post-reload race where the dashboard polled before the token was restored.
+ */
+async function shopkeeperHeaders(extra = {}) {
   const h = { ...extra };
-  if (FIREBASE_ID_TOKEN) h.Authorization = `Bearer ${FIREBASE_ID_TOKEN}`;
+  const token = await resolveFirebaseToken();
+  if (token) h.Authorization = `Bearer ${token}`;
   if (SHOPKEEPER_TOKEN) h['x-shopkeeper-token'] = SHOPKEEPER_TOKEN;
   return h;
 }
@@ -202,7 +238,7 @@ export const api = {
   async configurePrinter(jobId, settings, mode) {
     const data = await request(`/api/jobs/${jobId}/configure-printer`, {
       method: 'POST',
-      headers: shopkeeperHeaders({ 'Content-Type': 'application/json' }),
+      headers: await shopkeeperHeaders({ 'Content-Type': 'application/json' }),
       // `mode` is the EXPLICIT adapter choice ('real' | 'demo'); omitted lets
       // the backend infer from the printerId (demo id => demo).
       body: JSON.stringify(mode ? { settings, mode } : { settings }),
@@ -218,7 +254,7 @@ export const api = {
   async testConfiguration(mode) {
     return request('/api/printers/test', {
       method: 'POST',
-      headers: shopkeeperHeaders({ 'Content-Type': 'application/json' }),
+      headers: await shopkeeperHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify({ mode }),
     });
   },
@@ -231,7 +267,7 @@ export const api = {
   async submitPrint(jobId) {
     return request(`/api/jobs/${jobId}/submit-print`, {
       method: 'POST',
-      headers: shopkeeperHeaders(),
+      headers: await shopkeeperHeaders(),
     });
   },
 
@@ -239,7 +275,7 @@ export const api = {
   async print(jobId, printConfig) {
     return request(`/api/jobs/${jobId}/print`, {
       method: 'POST',
-      headers: shopkeeperHeaders({ 'Content-Type': 'application/json' }),
+      headers: await shopkeeperHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify(printConfig || {}),
     });
   },
@@ -256,16 +292,16 @@ export const api = {
 
   /** Real job feed for PrintX Lab (shopkeeper view). → { shopId, jobs }. */
   async shopJobs() {
-    return request('/api/shop/jobs', { headers: shopkeeperHeaders() });
+    return request('/api/shop/jobs', { headers: await shopkeeperHeaders() });
   },
 
   /** Honest shopkeeper overview counts derived from real jobs. */
   async shopOverview() {
-    return request('/api/shop/overview', { headers: shopkeeperHeaders() });
+    return request('/api/shop/overview', { headers: await shopkeeperHeaders() });
   },
 
   async cleanup(jobId) {
-    const data = await request(`/api/jobs/${jobId}`, { method: 'DELETE', headers: shopkeeperHeaders() });
+    const data = await request(`/api/jobs/${jobId}`, { method: 'DELETE', headers: await shopkeeperHeaders() });
     return data.job;
   },
 

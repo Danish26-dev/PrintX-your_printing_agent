@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PrintXLogo from './PrintXLogo';
+import InstallPrintX from './InstallPrintX';
 import '../styles/footer.css';
 
 const Footer = () => {
@@ -16,9 +17,14 @@ const Footer = () => {
               <PrintXLogo size={36} />
             </div>
             <p className="footer-tagline">Intelligent printing, simplified.</p>
-            <button className="btn-primary footer-cta" onClick={() => navigate('/workspace')}>
-              Try PrintX
-            </button>
+            <div className="footer-cta-group">
+              <button className="btn-primary footer-cta" onClick={() => navigate('/workspace')}>
+                Try PrintX
+              </button>
+              {/* Renders only when a real install path exists (Chromium prompt
+                  or iOS Share instructions); hidden otherwise. */}
+              <InstallPrintX variant="ghost" className="footer-install" />
+            </div>
           </div>
 
           <div className="footer-links-group">

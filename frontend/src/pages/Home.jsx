@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Hero from '../components/Hero';
 import Problem from '../components/Problem';
@@ -9,6 +10,8 @@ import Footer from '../components/Footer';
 import '../styles/home.css';
 
 const Home = () => {
+  const location = useLocation();
+
   useEffect(() => {
     // Smooth scroll behavior
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -21,6 +24,20 @@ const Home = () => {
       });
     });
   }, []);
+
+  // When arriving from another page (e.g. the navbar "Product"/"How it works"
+  // buttons on /privacy), scroll to the requested section once the home page
+  // has mounted. Supports both router state and a URL hash (#features).
+  useEffect(() => {
+    const target = location.state?.scrollTo || (location.hash ? location.hash.slice(1) : null);
+    if (!target) return;
+    // Defer to the next frame so the sections are in the DOM.
+    const t = setTimeout(() => {
+      const el = document.getElementById(target);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+    return () => clearTimeout(t);
+  }, [location]);
 
   return (
     <div className="home-container">

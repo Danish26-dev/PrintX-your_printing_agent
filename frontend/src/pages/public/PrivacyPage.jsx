@@ -11,7 +11,7 @@ const PrivacyPage = () => (
       PrintX is built around privacy-first document processing. Documents are processed for the
       requested print workflow rather than becoming a permanent customer profile.
     </p>
-    <p className="pubpage-meta">Last updated: [DATE] &nbsp;·&nbsp; Contact: [PRIVACY CONTACT EMAIL]</p>
+    <p className="pubpage-meta">Last updated: October 2026 &nbsp;·&nbsp; Contact: contact@printsx.in</p>
 
     <h2>What this policy covers</h2>
     <p>
@@ -47,9 +47,9 @@ const PrivacyPage = () => (
     <p>
       Document files are stored using a cloud storage backend, and job records are kept in a
       database so the shop can see and process the job. The application includes a cleanup
-      operation that removes a job&rsquo;s stored files. Exact retention windows for a given
-      deployment are configured by the operator; where a specific retention period applies it will
-      be stated here: [RETENTION PERIOD].
+      operation that removes a job&rsquo;s stored files. Retention windows are configured by the
+      shop operator; if you need the specific retention period for a given print shop, contact us at
+      contact@printsx.in.
     </p>
 
     <h2>Third-party / cloud services</h2>
@@ -73,7 +73,7 @@ const PrivacyPage = () => (
     <h2>Your choices</h2>
     <p>
       If you have questions about a document you submitted, or want information about data handling
-      for a specific print shop, contact us at [PRIVACY CONTACT EMAIL].
+      for a specific print shop, contact us at contact@printsx.in.
     </p>
 
     <h2>Changes to this policy</h2>

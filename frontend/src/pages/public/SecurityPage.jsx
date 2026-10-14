@@ -42,7 +42,7 @@ const SecurityPage = () => (
 
     <h2>Reporting a concern</h2>
     <p>
-      If you believe you have found a security issue, please contact us at [SECURITY CONTACT EMAIL]
+      If you believe you have found a security issue, please contact us at contact@printsx.in
       so we can look into it.
     </p>
   </PublicPageLayout>

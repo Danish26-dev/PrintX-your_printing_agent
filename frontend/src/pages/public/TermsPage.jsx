@@ -9,7 +9,7 @@ const TermsPage = () => (
       These terms describe acceptable use of PrintX and the responsibilities of the people who use
       it. By using PrintX you agree to these terms.
     </p>
-    <p className="pubpage-meta">Last updated: [DATE] &nbsp;·&nbsp; Contact: [CONTACT EMAIL]</p>
+    <p className="pubpage-meta">Last updated: October 2026 &nbsp;·&nbsp; Contact: contact@printsx.in</p>
 
     <h2>Acceptable use</h2>
     <p>
@@ -63,7 +63,7 @@ const TermsPage = () => (
     </p>
 
     <h2>Contact</h2>
-    <p>Questions about these terms? Contact us at [CONTACT EMAIL].</p>
+    <p>Questions about these terms? Contact us at contact@printsx.in.</p>
   </PublicPageLayout>
 );
 

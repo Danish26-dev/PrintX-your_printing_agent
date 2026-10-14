@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import PrintXLogo from './PrintXLogo';
 import '../styles/navigation.css';
 
@@ -8,6 +8,20 @@ const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Navigate to a landing section from ANY page. On the home page we smooth
+  // scroll directly; elsewhere we go to '/' and pass the target in router state
+  // so Home scrolls to it after it mounts (the sections only exist on home).
+  const goToSection = (id) => {
+    setMenuOpen(false);
+    if (location.pathname === '/') {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      navigate('/', { state: { scrollTo: id } });
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,8 +42,8 @@ const Navigation = () => {
         </Link>
 
         <div className={`nav-links ${menuOpen ? 'open' : ''}`}>
-          <a href="#features" className="nav-link" onClick={closeMenu}>Product</a>
-          <a href="#how-it-works" className="nav-link" onClick={closeMenu}>How it works</a>
+          <button type="button" className="nav-link nav-link-btn" onClick={() => goToSection('features')}>Product</button>
+          <button type="button" className="nav-link nav-link-btn" onClick={() => goToSection('how-it-works')}>How it works</button>
           <Link to="/about#for-print-shops" className="nav-link" onClick={closeMenu}>For Print Shops</Link>
           <Link to="/privacy" className="nav-link" onClick={closeMenu}>Privacy</Link>
           <a href="/shopkeeper/login" className="nav-link nav-link-login" onClick={closeMenu}>

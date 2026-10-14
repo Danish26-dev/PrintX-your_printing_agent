@@ -2,10 +2,9 @@ import React from 'react';
 import { Mail, Store, Users, LifeBuoy } from 'lucide-react';
 import PublicPageLayout from '../../components/PublicPageLayout';
 
-// Honest placeholder contact address. Replace [CONTACT EMAIL] with the real
-// business address once it exists. The form uses a mailto fallback so no
-// backend endpoint is fabricated.
-const CONTACT_EMAIL = '[CONTACT EMAIL]';
+// Business contact address. The form uses a mailto fallback so no backend
+// endpoint is fabricated.
+const CONTACT_EMAIL = 'contact@printsx.in';
 
 const ContactPage = () => {
   const onSubmit = (e) => {

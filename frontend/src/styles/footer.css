@@ -171,3 +171,19 @@
   color: #6B7280;
   font-size: 13px;
 }
+
+.footer-cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.footer-cta-group .footer-cta {
+  margin-top: 0;
+}
+
+.footer-install {
+  margin-top: 0;
+}

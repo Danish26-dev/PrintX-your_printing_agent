@@ -28,6 +28,14 @@ export interface BackendConfig {
   /** Comma-separated allowlist of shopkeeper emails authorized for the dashboard. */
   shopkeeperAllowlist: string[];
   /**
+   * DEMO authorization switch. When true, ANY successfully authenticated +
+   * email-verified Firebase account is treated as an authorized shopkeeper for
+   * the single PrintX Lab demo shop — the allowlist/custom-claim check is
+   * bypassed (but token verification is NOT). Default false: production keeps
+   * the strict allowlist. This exists so the demo is not bound to one Google
+   * account, without ever disabling Firebase authentication. */
+  shopkeeperAllowAnyAuthenticated: boolean;
+  /**
    * Shopkeeper auth mode:
    *   'firebase' — verify Firebase ID tokens (PRODUCTION).
    *   'token'    — shared x-shopkeeper-token header (CI / simple hosted).
@@ -105,6 +113,8 @@ export const config: BackendConfig = {
     .split(',')
     .map((s) => s.trim().toLowerCase())
     .filter(Boolean),
+  shopkeeperAllowAnyAuthenticated:
+    (process.env.SHOPKEEPER_ALLOW_ANY ?? '').trim().toLowerCase() === 'true',
   authMode: resolveAuthMode(),
   maxUploadBytes: parseInt(process.env.MAX_UPLOAD_BYTES ?? String(50 * 1024 * 1024), 10),
   maxInstructionLength: parseInt(process.env.MAX_INSTRUCTION_LENGTH ?? '2000', 10),

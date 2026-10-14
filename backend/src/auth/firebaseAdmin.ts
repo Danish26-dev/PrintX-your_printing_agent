@@ -70,7 +70,12 @@ export async function verifyShopkeeper(idToken: string | null): Promise<AuthDeci
   const emailVerified = decoded.email_verified === true;
   const hasClaim = decoded.shopkeeper === true || decoded.role === 'shopkeeper';
   const inAllowlist = Boolean(email) && emailVerified && config.shopkeeperAllowlist.includes(email);
-  if (hasClaim || inAllowlist) {
+  // DEMO: when enabled, any VERIFIED authenticated account is an authorized
+  // shopkeeper for the single PrintX Lab demo shop. The token is still fully
+  // verified above — this only relaxes the allowlist/claim authorization, never
+  // authentication itself.
+  const demoAllowAny = config.shopkeeperAllowAnyAuthenticated && Boolean(email) && emailVerified;
+  if (hasClaim || inAllowlist || demoAllowAny) {
     return { ok: true, email };
   }
   // Authenticated but NOT an authorized shopkeeper.

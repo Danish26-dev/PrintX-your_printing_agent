@@ -150,7 +150,7 @@ async function toApiError(response) {
 // (default 180s) so the browser never aborts a legitimate long PDF edit before
 // the backend can return a structured result/error. It only exists so the UI
 // does not hang forever if the backend becomes unreachable mid-request.
-const DEFAULT_TIMEOUT_MS = Number(process.env.REACT_APP_REQUEST_TIMEOUT_MS) || 210000;
+const DEFAULT_TIMEOUT_MS = Number(process.env.REACT_APP_REQUEST_TIMEOUT_MS) || 320000;
 
 async function request(path, { method = 'GET', body, headers, timeoutMs = DEFAULT_TIMEOUT_MS } = {}) {
   const controller = new AbortController();

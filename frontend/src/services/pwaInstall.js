@@ -67,6 +67,30 @@ export function canPromptInstall() {
 }
 
 /**
+ * Wait up to `ms` for a deferred native install prompt to arrive, then resolve
+ * with whether one is available. Chrome fires `beforeinstallprompt` a few
+ * seconds after load for an eligible PWA, so a user who taps Install early may
+ * tap before it has arrived. Briefly waiting lets us use the REAL one-tap
+ * install instead of immediately falling back to manual instructions.
+ */
+export function waitForPrompt(ms = 2500) {
+  if (deferredPrompt) return Promise.resolve(true);
+  return new Promise((resolve) => {
+    let done = false;
+    const finish = (val) => {
+      if (done) return;
+      done = true;
+      unsub();
+      resolve(val);
+    };
+    const unsub = subscribeInstall(() => {
+      if (deferredPrompt) finish(true);
+    });
+    setTimeout(() => finish(deferredPrompt != null), ms);
+  });
+}
+
+/**
  * Trigger the native install prompt. Returns the user's choice outcome
  * ('accepted' | 'dismissed') or null when no real prompt is available (so the
  * caller never pretends an install happened).

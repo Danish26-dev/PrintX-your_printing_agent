@@ -4,6 +4,8 @@ import {
   installMode,
   promptInstall,
   subscribeInstall,
+  waitForPrompt,
+  canPromptInstall,
 } from '../services/pwaInstall';
 import '../styles/install.css';
 
@@ -24,6 +26,7 @@ const InstallPrintX = ({ variant = 'solid', className = '' }) => {
   const [iosOpen, setIosOpen] = useState(false);
   const [androidOpen, setAndroidOpen] = useState(false);
   const [installed, setInstalled] = useState(false);
+  const [busy, setBusy] = useState(false);
 
   useEffect(() => {
     const update = () => setMode(installMode());
@@ -42,18 +45,22 @@ const InstallPrintX = ({ variant = 'solid', className = '' }) => {
       return;
     }
     if (mode === 'android') {
-      // A native prompt may have arrived since first render; prefer it.
-      const outcome = await promptInstall();
-      if (outcome === 'accepted') {
-        setInstalled(true);
+      setBusy(true);
+      // Prefer the REAL native prompt. If it hasn't been captured yet, wait a
+      // short moment for Chrome to fire beforeinstallprompt (it often arrives
+      // a few seconds after load), then trigger it.
+      if (!canPromptInstall()) {
+        await waitForPrompt(2500);
+      }
+      if (canPromptInstall()) {
+        const outcome = await promptInstall();
+        setBusy(false);
+        if (outcome === 'accepted') setInstalled(true);
         setMode(installMode());
         return;
       }
-      if (outcome === 'dismissed') {
-        setMode(installMode());
-        return;
-      }
-      // No native prompt available on this Android browser -> show steps.
+      // No native prompt available on this browser -> show genuine steps.
+      setBusy(false);
       setAndroidOpen(true);
       return;
     }
@@ -81,10 +88,11 @@ const InstallPrintX = ({ variant = 'solid', className = '' }) => {
         type="button"
         className={`install-printx ${variant} ${className}`}
         onClick={handleClick}
+        disabled={busy}
         aria-haspopup={mode === 'ios' || mode === 'android' ? 'dialog' : undefined}
       >
         <Download size={18} />
-        <span>Install PrintX</span>
+        <span>{busy ? 'Preparing…' : 'Install PrintX'}</span>
       </button>
 
       {iosOpen && (

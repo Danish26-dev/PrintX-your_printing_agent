@@ -125,8 +125,12 @@ export const config: BackendConfig = {
   // backoff). It is deliberately larger than the agent's own Agent->Engine
   // process timeout (default 100s) so the INNER layer fails first with a
   // specific error instead of the backend aborting generically. Hierarchy:
-  //   engine convert (90s) < agent->engine (100s) < backend->agent (180s).
-  agentTimeoutMs: parseInt(process.env.AGENT_TIMEOUT_MS ?? '180000', 10),
+  //   engine convert (150s) < agent->engine (165s) < backend->agent (290s) < frontend (320s).
+  //   Raised from 180s: a heavier PDF (e.g. a flattened/large file uploaded from
+  //   a phone) can fall out of the fast native-edit path into the slower
+  //   PDF->DOCX->edit->PDF conversion pipeline with a cold LibreOffice start,
+  //   which exceeded the old 180s budget and surfaced as AGENT_TIMEOUT.
+  agentTimeoutMs: parseInt(process.env.AGENT_TIMEOUT_MS ?? '290000', 10),
   // Backend -> Engine is only a processed-file download; 120s is ample.
   engineTimeoutMs: parseInt(process.env.ENGINE_TIMEOUT_MS ?? '120000', 10),
   corsOrigins: (process.env.CORS_ORIGIN ?? '*')

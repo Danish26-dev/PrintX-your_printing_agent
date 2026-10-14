@@ -36,7 +36,10 @@ class Settings:
         # engine budget (default 100s) so a stuck conversion fails here with a
         # specific ConversionError instead of an upstream generic abort:
         #   convert (90s) < agent->engine (100s) < backend->agent (180s).
-        self.convert_timeout: int = int(os.getenv("CONVERT_TIMEOUT", "90"))
+        # Raised from 90s to 150s so a heavier PDF conversion (with a cold
+        # LibreOffice start) completes within the inner budget. Ordering kept:
+        #   convert(150s) < agent->engine process(165s) < backend->agent(290s).
+        self.convert_timeout: int = int(os.getenv("CONVERT_TIMEOUT", "150"))
         self._soffice_override: str = os.getenv("SOFFICE_PATH", "").strip()
 
         # Ensure the working directory exists on startup.

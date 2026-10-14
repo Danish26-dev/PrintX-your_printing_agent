@@ -26,8 +26,11 @@ function documentEngineUrl(): string {
 //
 // `process` includes a possible cold LibreOffice start (~20-30s on Windows) for
 // PDF output, so it gets the larger budget. `inspect` only extracts text.
-const INSPECT_TIMEOUT_MS = Number(process.env.ENGINE_INSPECT_TIMEOUT_MS ?? 60_000);
-const PROCESS_TIMEOUT_MS = Number(process.env.ENGINE_PROCESS_TIMEOUT_MS ?? 100_000);
+const INSPECT_TIMEOUT_MS = Number(process.env.ENGINE_INSPECT_TIMEOUT_MS ?? 90_000);
+// Raised from 100s to 165s: a heavier PDF that falls into the conversion
+// pipeline (PDF->DOCX->edit->PDF) plus a cold LibreOffice start can exceed the
+// old budget. Keeps the ladder: convert(150s) < process(165s) < agent(290s).
+const PROCESS_TIMEOUT_MS = Number(process.env.ENGINE_PROCESS_TIMEOUT_MS ?? 165_000);
 
 /** Run a fetch with a bounded AbortController timeout. Maps an abort to a typed
  * ENGINE_TIMEOUT error so the orchestrator can surface a clean, specific

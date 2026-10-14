@@ -40,7 +40,13 @@ export interface BackendConfig {
   maxCopies: number;
   agentTimeoutMs: number;
   engineTimeoutMs: number;
-  corsOrigin: string;
+  /**
+   * Allowed CORS origins. CORS_ORIGIN may be a single origin, a
+   * comma-separated list of origins, or '*' (allow any). A list is needed
+   * because a Cloud Run service is reachable at MORE THAN ONE hostname
+   * (e.g. the <hash>-<region>.run.app and the <project-number>.<region>.run.app
+   * forms), and the browser's Origin must match exactly. */
+  corsOrigins: string[];
   /** URL of the LOCAL printer agent on the shopkeeper machine (empty = none). */
   printerAgentUrl: string;
   /** Optional shared token the local printer agent requires. */
@@ -113,7 +119,10 @@ export const config: BackendConfig = {
   agentTimeoutMs: parseInt(process.env.AGENT_TIMEOUT_MS ?? '180000', 10),
   // Backend -> Engine is only a processed-file download; 120s is ample.
   engineTimeoutMs: parseInt(process.env.ENGINE_TIMEOUT_MS ?? '120000', 10),
-  corsOrigin: process.env.CORS_ORIGIN ?? '*',
+  corsOrigins: (process.env.CORS_ORIGIN ?? '*')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean),
   // Local printer agent (runs on the shopkeeper machine). Empty by default: the
   // backend then honestly reports no real printer instead of fabricating one.
   printerAgentUrl: stripSlash(process.env.PRINTER_AGENT_URL ?? ''),

@@ -9,7 +9,7 @@ const Subscriptions = () => {
   const plans = getPlans();
 
   return (
-    <ShopkeeperLayout title="Subscriptions" subtitle="Manage your PrintX plan">
+    <ShopkeeperLayout title="Subscriptions" subtitle="Manage your PrintsX plan">
       {/* Current plan + usage */}
       <div className="sk-grid cols-2">
         <div className="sk-card">

@@ -282,7 +282,7 @@ const ShopkeeperWorkspace = () => {
 
   return (
     <ShopkeeperLayout
-      title="PrintX Agent Workspace"
+      title="PrintsX Agent Workspace"
       subtitle="Live printer-agent operations (real)"
       contentClassName="sk-content-fill"
       actions={
@@ -338,7 +338,7 @@ const ShopkeeperWorkspace = () => {
               <div className="ws-config-head">
                 <div className="ws-selected">
                   <Printer size={15} />
-                  <span>Selected Printer: <strong>{selectedDevice?.name || job?.printSettings?.printerName || (isDemo ? 'PrintX Demo Printer' : 'None')}</strong></span>
+                  <span>Selected Printer: <strong>{selectedDevice?.name || job?.printSettings?.printerName || (isDemo ? 'PrintsX Demo Printer' : 'None')}</strong></span>
                   <span className={`pm-badge ${noDeviceSelected ? 'offline' : 'online'}`}>
                     {noDeviceSelected ? 'NONE' : isDemo ? 'DEMO · READY' : (readyForApproval || submitted ? 'READY' : (status ? 'READY' : 'READY'))}
                   </span>

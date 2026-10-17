@@ -11,23 +11,23 @@ const BASE_URL = (process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001')
 /** Maps backend error codes to human-readable, non-leaking UI messages. */
 const ERROR_MESSAGES = {
   UNSUPPORTED_FILE:
-    "This file type isn't supported yet. PrintX currently supports DOCX and digital PDF files.",
+    "This file type isn't supported yet. PrintsX currently supports DOCX and digital PDF files.",
   scanned_pdf:
-    'This PDF appears to be scanned or image-based. PrintX currently supports editable digital PDFs.',
+    'This PDF appears to be scanned or image-based. PrintsX currently supports editable digital PDFs.',
   SCANNED_PDF:
-    'This PDF appears to be scanned or image-based. PrintX currently supports editable digital PDFs.',
+    'This PDF appears to be scanned or image-based. PrintsX currently supports editable digital PDFs.',
   EMPTY_FILE: 'That file appears to be empty. Please choose a valid document.',
   MISSING_FILE: 'Please choose a file to upload.',
-  MISSING_INSTRUCTION: 'Please type what you would like PrintX to change.',
+  MISSING_INSTRUCTION: 'Please type what you would like PrintsX to change.',
   INSTRUCTION_TOO_LONG: 'That instruction is a bit too long. Please shorten it and try again.',
   PROCESSING_FAILED: "We couldn't prepare this document. Please try again.",
   CONVERSION_FAILED: "We couldn't convert this document. Please try again.",
-  AGENT_TIMEOUT: 'PrintX is taking longer than expected. Please try again.',
-  AGENT_UNREACHABLE: 'PrintX is temporarily unavailable. Please try again shortly.',
-  AGENT_FAILURE: "PrintX couldn't process the instruction right now. Please try again.",
-  AGENT_BAD_RESPONSE: "PrintX couldn't process the instruction right now. Please try again.",
-  ENGINE_TIMEOUT: 'PrintX is taking longer than expected. Please try again.',
-  ENGINE_UNREACHABLE: 'PrintX is temporarily unavailable. Please try again shortly.',
+  AGENT_TIMEOUT: 'PrintsX is taking longer than expected. Please try again.',
+  AGENT_UNREACHABLE: 'PrintsX is temporarily unavailable. Please try again shortly.',
+  AGENT_FAILURE: "PrintsX couldn't process the instruction right now. Please try again.",
+  AGENT_BAD_RESPONSE: "PrintsX couldn't process the instruction right now. Please try again.",
+  ENGINE_TIMEOUT: 'PrintsX is taking longer than expected. Please try again.',
+  ENGINE_UNREACHABLE: 'PrintsX is temporarily unavailable. Please try again shortly.',
   ENGINE_DOWNLOAD_FAILED: "We couldn't retrieve the processed document. Please try again.",
   NO_OUTPUT: 'No processed document is available yet.',
   EMPTY_OUTPUT: "The processed document came back empty. Please try again.",
@@ -40,21 +40,21 @@ const ERROR_MESSAGES = {
   // Document-engine validation / content errors
   TEXT_NOT_FOUND: "We couldn't find the text you asked us to change.",
   output_validation_failed: 'The edited document failed our quality check, so we did not keep it.',
-  DOCUMENT_EDIT_UNSUPPORTED: 'That change is not something PrintX can safely make to this document.',
+  DOCUMENT_EDIT_UNSUPPORTED: 'That change is not something PrintsX can safely make to this document.',
   // Agent / Bedrock (honest, sanitized)
-  AGENT_MISCONFIGURED: "PrintX's AI service is not configured correctly right now.",
-  BEDROCK_ACCESS_DENIED: "PrintX's AI service is temporarily unavailable.",
-  BEDROCK_MODEL_UNAVAILABLE: "PrintX's AI service is temporarily unavailable.",
-  BEDROCK_AUTH_FAILED: "PrintX's AI service is temporarily unavailable.",
-  BEDROCK_THROTTLED: "PrintX's AI service is busy. Please try again shortly.",
-  BEDROCK_NO_CREDENTIALS: "PrintX's AI service is temporarily unavailable.",
+  AGENT_MISCONFIGURED: "PrintsX's AI service is not configured correctly right now.",
+  BEDROCK_ACCESS_DENIED: "PrintsX's AI service is temporarily unavailable.",
+  BEDROCK_MODEL_UNAVAILABLE: "PrintsX's AI service is temporarily unavailable.",
+  BEDROCK_AUTH_FAILED: "PrintsX's AI service is temporarily unavailable.",
+  BEDROCK_THROTTLED: "PrintsX's AI service is busy. Please try again shortly.",
+  BEDROCK_NO_CREDENTIALS: "PrintsX's AI service is temporarily unavailable.",
   // Printing (honest)
   PRINTER_UNAVAILABLE: 'The selected printer is currently unavailable.',
   PRINT_FAILED: 'The print command could not be submitted. Please try again.',
   INVALID_PRINT_CONFIG: 'The print settings are invalid. Please review and try again.',
   CLEANUP_FAILED: 'Some temporary files could not be removed.',
   INTERNAL_ERROR: 'Something went wrong on our side. Please try again.',
-  NETWORK: 'Cannot reach PrintX right now. Check your connection and try again.',
+  NETWORK: 'Cannot reach PrintsX right now. Check your connection and try again.',
 };
 
 /** Error thrown by the API client with a friendly message + machine code. */

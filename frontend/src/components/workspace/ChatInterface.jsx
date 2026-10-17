@@ -145,7 +145,7 @@ const ChatInterface = ({ selectedShop, messages, setMessages, onFileUpload, onJo
       pushErrorMessage(
         error instanceof ApiError
           ? error.message
-          : "PrintX couldn't process that instruction. Please try again.",
+          : "PrintsX couldn't process that instruction. Please try again.",
       );
     }
   };
@@ -294,7 +294,7 @@ const ChatInterface = ({ selectedShop, messages, setMessages, onFileUpload, onJo
             : 'double-sided'
           : '';
         honest =
-          `Your document has been sent to PrintX Lab and the print settings were verified` +
+          `Your document has been sent to PrintsX Lab and the print settings were verified` +
           (s
             ? ` (${s.copies} ${s.copies === 1 ? 'copy' : 'copies'}, ${s.paperSize}, ${s.colorMode}, ${s.orientation}, ${sidesText}).`
             : '.') +

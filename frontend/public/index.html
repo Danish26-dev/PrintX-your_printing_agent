@@ -9,30 +9,33 @@
         <meta name="theme-color" content="#0B0F19" />
         <meta
             name="description"
-            content="PrintX connects customers with print shops through an AI-powered document and printing workflow. Upload, describe what you need, preview the result, and print."
+            content="PrintsX connects customers with print shops through an AI-powered document and printing workflow. Upload, describe what you need, preview the result, and print."
         />
         <meta name="robots" content="index, follow" />
-        <!-- Canonical: set CANONICAL_URL to the production domain at deploy time. -->
-        <link rel="canonical" href="/" />
+        <!-- Canonical: the ONLY primary domain is https://printsx.in/ (apex, not
+             www, HTTPS). Keep this absolute so crawlers never index a Firebase
+             hosting URL or the www variant as the canonical. -->
+        <link rel="canonical" href="https://printsx.in/" />
 
         <!-- Open Graph -->
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="PrintX" />
-        <meta property="og:title" content="PrintX — Intelligent Printing, Simplified" />
+        <meta property="og:site_name" content="PrintsX" />
+        <meta property="og:title" content="PrintsX — Intelligent Printing, Simplified" />
         <meta
             property="og:description"
-            content="PrintX connects customers with print shops through an AI-powered document and printing workflow. Upload, describe what you need, preview the result, and print."
+            content="PrintsX connects customers with print shops through an AI-powered document and printing workflow. Upload, describe what you need, preview the result, and print."
         />
-        <meta property="og:image" content="/icons/icon-512.png" />
+        <meta property="og:url" content="https://printsx.in/" />
+        <meta property="og:image" content="https://printsx.in/icons/icon-512.png" />
 
         <!-- Twitter / X -->
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="PrintX — Intelligent Printing, Simplified" />
+        <meta name="twitter:title" content="PrintsX — Intelligent Printing, Simplified" />
         <meta
             name="twitter:description"
             content="AI-powered document and printing workflow. Upload, describe what you need, preview, and print."
         />
-        <meta name="twitter:image" content="/icons/icon-512.png" />
+        <meta name="twitter:image" content="https://printsx.in/icons/icon-512.png" />
 
         <!-- PWA: installable web app -->
         <link rel="manifest" href="/manifest.webmanifest" />
@@ -43,7 +46,7 @@
         <!-- iOS standalone (home-screen) hints -->
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="PrintX" />
+        <meta name="apple-mobile-web-app-title" content="PrintsX" />
         <meta name="mobile-web-app-capable" content="yes" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -51,7 +54,7 @@
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
             rel="stylesheet"
         />
-        <title>PrintX — Intelligent Printing, Simplified</title>
+        <title>PrintsX — Intelligent Printing, Simplified</title>
     </head>
     <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>

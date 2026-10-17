@@ -6,7 +6,7 @@
 
 export function getCurrentPlan() {
   return {
-    name: 'PrintX Pro',
+    name: 'PrintsX Pro',
     price: '₹999',
     interval: 'month',
     features: [

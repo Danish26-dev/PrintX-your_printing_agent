@@ -129,7 +129,7 @@ export const getWelcomeMessage = () => ({
   id: 'welcome',
   type: 'system',
   text:
-    '👋 Welcome to PrintX!\n\nSelect a print shop, upload a DOCX or digital PDF, and tell PrintX what to change in plain language.\n\nPrintX prepares your document and shows you a preview before printing.',
+    '👋 Welcome to PrintsX!\n\nSelect a print shop, upload a DOCX or digital PDF, and tell PrintsX what to change in plain language.\n\nPrintsX prepares your document and shows you a preview before printing.',
   timestamp: new Date().toISOString(),
 });
 
@@ -304,7 +304,7 @@ export function classifyMessage(text, job) {
 export function contextualPrompt(intent, job) {
   switch (intent) {
     case ChatIntent.DECLINE:
-      return 'No problem — I\'ve stopped there and kept your document and settings as they are. Tell me what you\'d like to change, or say "proceed" when you\'re ready to send it to PrintX Lab.';
+      return 'No problem — I\'ve stopped there and kept your document and settings as they are. Tell me what you\'d like to change, or say "proceed" when you\'re ready to send it to PrintsX Lab.';
     case ChatIntent.NEEDS_UPLOAD:
       return 'Please upload a DOCX or digital PDF first, then tell me what to change.';
     case ChatIntent.CLARIFY_CONFIRM:
@@ -315,15 +315,15 @@ export function contextualPrompt(intent, job) {
     case ChatIntent.ALREADY_IN_SHOP: {
       const s = job?.status;
       if (s === 'READY_FOR_APPROVAL') {
-        return 'Your document is already with PrintX Lab and the print settings have been verified. The shop will give the final approval before anything prints.';
+        return 'Your document is already with PrintsX Lab and the print settings have been verified. The shop will give the final approval before anything prints.';
       }
       if (s === 'CONFIGURING_PRINTER') {
-        return 'PrintX Lab is configuring the printer for your document right now. Nothing prints until the shop approves.';
+        return 'PrintsX Lab is configuring the printer for your document right now. Nothing prints until the shop approves.';
       }
       if (s === 'PRINT_SUBMITTED' || s === 'PRINT_COMMAND_SUBMITTED') {
-        return 'This job has already been submitted to the printer at PrintX Lab. A successful submission means the spooler accepted it, not that it has physically printed yet.';
+        return 'This job has already been submitted to the printer at PrintsX Lab. A successful submission means the spooler accepted it, not that it has physically printed yet.';
       }
-      return 'This document has already been sent to PrintX Lab.';
+      return 'This document has already been sent to PrintsX Lab.';
     }
     default:
       return '';

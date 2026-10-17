@@ -37,7 +37,7 @@ const Navigation = () => {
   return (
     <nav className={`navigation ${scrolled ? 'scrolled' : ''}`}>
       <div className="nav-content">
-        <Link to="/" className="nav-logo" onClick={closeMenu} aria-label="PrintX home">
+        <Link to="/" className="nav-logo" onClick={closeMenu} aria-label="PrintsX home">
           <PrintXLogo size={32} />
         </Link>
 
@@ -54,7 +54,7 @@ const Navigation = () => {
             className="nav-link nav-link-try"
             onClick={() => { closeMenu(); navigate('/workspace'); }}
           >
-            Try PrintX
+            Try PrintsX
           </button>
         </div>
 
@@ -67,7 +67,7 @@ const Navigation = () => {
             className="nav-try-btn"
             onClick={() => { closeMenu(); navigate('/workspace'); }}
           >
-            Try PrintX
+            Try PrintsX
           </button>
         </div>
 

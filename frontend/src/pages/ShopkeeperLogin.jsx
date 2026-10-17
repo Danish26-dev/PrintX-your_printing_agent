@@ -71,7 +71,7 @@ const ShopkeeperLogin = () => {
               </p>
             )}
             <p className="login-note">
-              Only authorized PrintX Lab shopkeeper accounts can access the dashboard.
+              Only authorized PrintsX Lab shopkeeper accounts can access the dashboard.
             </p>
           </div>
         )}

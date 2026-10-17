@@ -10,7 +10,7 @@ const ContactPage = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    const subject = encodeURIComponent(`[${data.get('topic') || 'General'}] PrintX enquiry`);
+    const subject = encodeURIComponent(`[${data.get('topic') || 'General'}] PrintsX enquiry`);
     const body = encodeURIComponent(
       `Name: ${data.get('name') || ''}\nEmail: ${data.get('email') || ''}\n\n${data.get('message') || ''}`,
     );
@@ -21,7 +21,7 @@ const ContactPage = () => {
     <PublicPageLayout title="Contact" wide>
       <span className="pubpage-eyebrow">Contact</span>
       <h1 className="pubpage-title">
-        Get in touch with <span className="pubpage-gradient">PrintX</span>
+        Get in touch with <span className="pubpage-gradient">PrintsX</span>
       </h1>
       <p className="pubpage-lede">
         Questions about the product, interested in onboarding your print shop, or exploring a
@@ -32,12 +32,12 @@ const ContactPage = () => {
         <div className="pubpage-card">
           <span className="card-icon"><Mail size={22} /></span>
           <h3>Product questions</h3>
-          <p>How PrintX works and whether it fits your use case.</p>
+          <p>How PrintsX works and whether it fits your use case.</p>
         </div>
         <div className="pubpage-card">
           <span className="card-icon"><Store size={22} /></span>
           <h3>Print-shop onboarding</h3>
-          <p>Run your shop&rsquo;s incoming jobs through PrintX.</p>
+          <p>Run your shop&rsquo;s incoming jobs through PrintsX.</p>
         </div>
         <div className="pubpage-card">
           <span className="card-icon"><Users size={22} /></span>

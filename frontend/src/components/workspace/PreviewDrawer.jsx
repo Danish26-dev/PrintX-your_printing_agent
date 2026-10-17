@@ -25,7 +25,7 @@ const PreviewDrawer = ({ isOpen, onClose, uploadedFiles, activeJob }) => {
       return (
         <div className="preview-empty">
           <Edit3 size={48} />
-          <p>The edited document will appear here once PrintX has prepared it.</p>
+          <p>The edited document will appear here once PrintsX has prepared it.</p>
         </div>
       );
     }

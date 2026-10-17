@@ -22,7 +22,7 @@
  */
 export const PRINTX_LAB = {
   id: 'printx-lab',
-  name: 'PrintX Lab',
+  name: 'PrintsX Lab',
   isPrintX: true,
   aiEnabled: true, // true: the AI document pipeline is really wired up
   // Privacy-verified reflects that documents are processed by our own

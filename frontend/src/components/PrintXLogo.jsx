@@ -28,7 +28,7 @@ const PrintXLogo = ({ size = 32, showText = true, variant = 'light', className =
     >
       <img
         src={logoUrl}
-        alt="PrintX"
+        alt="PrintsX"
         width={size}
         height={size}
         style={{ height: size, width: 'auto', objectFit: 'contain', display: 'block' }}
@@ -46,7 +46,7 @@ const PrintXLogo = ({ size = 32, showText = true, variant = 'light', className =
             lineHeight: 1,
           }}
         >
-          Print<span style={{ color: '#7C3AED' }}>X</span>
+          Prints<span style={{ color: '#7C3AED' }}>X</span>
         </span>
       )}
     </span>

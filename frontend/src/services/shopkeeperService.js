@@ -29,7 +29,7 @@ export function isAuthenticated() {
  */
 export function loginWithFirebase({ email, name } = {}) {
   const profile = {
-    shopName: 'PrintX Lab',
+    shopName: 'PrintsX Lab',
     shopkeeperName: name || email || 'Shopkeeper',
     email: email || '',
     shopId: 'SHOP-PX-001',
@@ -59,7 +59,7 @@ export function getShopkeeperToken() {
 /** Mock login — any credentials work (demo). Stores a shopkeeper profile. */
 export function login({ shopName, email } = {}) {
   const profile = {
-    shopName: shopName || 'PrintX Demo Lab',
+    shopName: shopName || 'PrintsX Demo Lab',
     shopkeeperName: 'Shop Owner',
     email: email || 'owner@printx.demo',
     shopId: 'SHOP-PX-001',

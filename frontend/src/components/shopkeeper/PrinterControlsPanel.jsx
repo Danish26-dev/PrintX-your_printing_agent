@@ -128,7 +128,7 @@ const PrinterControlsPanel = ({ job, jobId, onConfigured, cursorActiveField, sel
   // header by saying "No printers detected" while Demo Printer is selected).
   const printerOptions = useMemo(() => {
     const opts = [...printers];
-    const demo = demoPrinter || (isDemo ? { id: 'demo-printer', name: 'PrintX Demo Printer', status: 'online' } : null);
+    const demo = demoPrinter || (isDemo ? { id: 'demo-printer', name: 'PrintsX Demo Printer', status: 'online' } : null);
     if (isDemo && demo && !opts.some((p) => p.id === demo.id)) opts.unshift(demo);
     return opts;
   }, [printers, demoPrinter, isDemo]);

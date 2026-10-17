@@ -112,7 +112,7 @@ const Dashboard = () => {
 
   return (
     <ShopkeeperLayout
-      title={shopkeeper?.shopName || 'PrintX Lab'}
+      title={shopkeeper?.shopName || 'PrintsX Lab'}
       subtitle="Operational overview"
     >
       {/* Live job-feed connection notice. Shown only when the feed is failing;

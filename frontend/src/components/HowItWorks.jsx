@@ -11,7 +11,7 @@ const HowItWorks = () => {
       icon: <Store size={32} />,
       number: '01',
       title: 'Choose a print shop',
-      description: 'Find and select an available PrintX-enabled shop, such as PrintX Lab.',
+      description: 'Find and select an available PrintsX-enabled shop, such as PrintsX Lab.',
     },
     {
       icon: <FileUp size={32} />,
@@ -30,7 +30,7 @@ const HowItWorks = () => {
       icon: <Eye size={32} />,
       number: '04',
       title: 'Review before printing',
-      description: 'PrintX prepares the document and shows you a preview to approve.',
+      description: 'PrintsX prepares the document and shows you a preview to approve.',
     },
     {
       icon: <Printer size={32} />,
@@ -67,12 +67,12 @@ const HowItWorks = () => {
         </div>
 
         <div className="cta-final">
-          <h3 className="cta-title">Ready to try PrintX?</h3>
+          <h3 className="cta-title">Ready to try PrintsX?</h3>
           <p className="cta-subtitle">
-            Open PrintX Lab and run a real document through the workflow.
+            Open PrintsX Lab and run a real document through the workflow.
           </p>
           <button className="btn-primary cta-button" onClick={() => navigate('/workspace')}>
-            Try PrintX
+            Try PrintsX
           </button>
         </div>
       </div>

@@ -8,29 +8,29 @@ const PrivacyPage = () => (
       Your document should not become <span className="pubpage-gradient">someone else&rsquo;s file</span>
     </h1>
     <p className="pubpage-lede">
-      PrintX is built around privacy-first document processing. Documents are processed for the
+      PrintsX is built around privacy-first document processing. Documents are processed for the
       requested print workflow rather than becoming a permanent customer profile.
     </p>
     <p className="pubpage-meta">Last updated: October 2026 &nbsp;·&nbsp; Contact: contact@printsx.in</p>
 
     <h2>What this policy covers</h2>
     <p>
-      This policy describes how the PrintX product handles information in its current form. It
+      This policy describes how the PrintsX product handles information in its current form. It
       reflects the behavior actually implemented in the application and will be updated as the
       product evolves.
     </p>
 
-    <h2>Information PrintX handles</h2>
+    <h2>Information PrintsX handles</h2>
     <h3>Shopkeeper account information</h3>
     <p>
-      Print-shop operators sign in with Google. For authenticated shopkeepers, PrintX uses the
+      Print-shop operators sign in with Google. For authenticated shopkeepers, PrintsX uses the
       identity information provided by Google Sign-In (such as the account email) to authorize
       access to the shopkeeper dashboard. Customers do not need an account to use the customer
       workflow.
     </p>
     <h3>Documents you upload</h3>
     <p>
-      When you send a document to a shop, PrintX receives the file so it can be edited (per your
+      When you send a document to a shop, PrintsX receives the file so it can be edited (per your
       instructions), prepared for preview, and configured for printing. Your natural-language
       instruction and the resulting job details are also handled as part of the workflow.
     </p>
@@ -54,8 +54,8 @@ const PrivacyPage = () => (
 
     <h2>Third-party / cloud services</h2>
     <p>
-      PrintX runs on cloud infrastructure and uses services for authentication, storage, databases,
-      and AI document understanding. These services process data on PrintX&rsquo;s behalf to deliver
+      PrintsX runs on cloud infrastructure and uses services for authentication, storage, databases,
+      and AI document understanding. These services process data on PrintsX&rsquo;s behalf to deliver
       the workflow. We do not sell your documents or use them to build a marketing profile.
     </p>
 
@@ -66,7 +66,7 @@ const PrivacyPage = () => (
       <li>Backend operations that act on behalf of a shop are access-controlled.</li>
     </ul>
     <p>
-      PrintX uses a privacy-first architecture. We do not claim any formal certification (such as
+      PrintsX uses a privacy-first architecture. We do not claim any formal certification (such as
       ISO, SOC 2, GDPR, or HIPAA) unless and until it is actually obtained.
     </p>
 

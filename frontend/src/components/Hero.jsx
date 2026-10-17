@@ -32,13 +32,13 @@ const Hero = () => {
 
           <p className="hero-subtitle">
             Send a document to a print shop, describe the edits and print settings in plain
-            language, review the prepared preview, and approve the job. PrintX gives print shops
+            language, review the prepared preview, and approve the job. PrintsX gives print shops
             an intelligent workflow to receive, configure, and process those jobs.
           </p>
 
           <div className="hero-cta-group">
             <button className="btn-primary hero-cta" onClick={() => navigate('/workspace')}>
-              Try PrintX
+              Try PrintsX
               <ArrowRight className="btn-icon" size={20} />
             </button>
 

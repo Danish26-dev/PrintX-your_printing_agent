@@ -77,7 +77,7 @@ export async function fetchShopSnapshot() {
       error: {
         code: err?.code || 'UNKNOWN',
         status: err?.status,
-        message: err?.message || 'Could not reach PrintX right now.',
+        message: err?.message || 'Could not reach PrintsX right now.',
       },
     };
   }

@@ -7,19 +7,19 @@ const Solution = () => {
     {
       icon: <Upload size={32} />,
       title: 'Upload',
-      description: 'Send a PDF or DOCX to PrintX Lab from your browser or phone.',
+      description: 'Send a PDF or DOCX to PrintsX Lab from your browser or phone.',
       status: 'active',
     },
     {
       icon: <MessageSquare size={32} />,
       title: 'Describe',
-      description: 'Tell PrintX the edits and print settings in plain language.',
+      description: 'Tell PrintsX the edits and print settings in plain language.',
       status: 'active',
     },
     {
       icon: <Eye size={32} />,
       title: 'Preview',
-      description: 'PrintX prepares the document and shows you a preview to review.',
+      description: 'PrintsX prepares the document and shows you a preview to review.',
       status: 'active',
     },
     {

@@ -1,43 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  PrintX sitemap. URLs are root-relative placeholders; prefix each <loc> with
-  the production domain at deploy time (e.g. https://your-domain.example).
-  Only public marketing/content pages are listed — not the authenticated
-  shopkeeper area or the customer job workspace.
+  PrintsX sitemap. All URLs use the canonical primary domain https://printsx.in/
+  (apex, not www). Only public marketing/content pages are listed — not the
+  authenticated shopkeeper area or the customer job workspace.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/</loc>
+    <loc>https://printsx.in/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>/how-it-works</loc>
+    <loc>https://printsx.in/how-it-works</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>/about</loc>
+    <loc>https://printsx.in/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>/contact</loc>
+    <loc>https://printsx.in/contact</loc>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>/privacy</loc>
+    <loc>https://printsx.in/privacy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>/terms</loc>
+    <loc>https://printsx.in/terms</loc>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>/security</loc>
+    <loc>https://printsx.in/security</loc>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>

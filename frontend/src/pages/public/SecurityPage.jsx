@@ -18,7 +18,7 @@ const SecurityPage = () => (
       Security &amp; <span className="pubpage-gradient">access control</span>
     </h1>
     <p className="pubpage-lede">
-      PrintX separates the customer and shopkeeper experiences and controls access to shop
+      PrintsX separates the customer and shopkeeper experiences and controls access to shop
       operations. Below is an honest summary of what is implemented today.
     </p>
 

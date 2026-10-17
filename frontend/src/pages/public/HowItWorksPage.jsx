@@ -4,10 +4,10 @@ import { Store, FileUp, MessageSquare, Eye, CheckCircle, Printer, Inbox, Sliders
 import PublicPageLayout from '../../components/PublicPageLayout';
 
 const customerSteps = [
-  { icon: <Store size={22} />, title: 'Choose a print shop', body: 'Select an available PrintX-enabled shop, such as PrintX Lab.' },
+  { icon: <Store size={22} />, title: 'Choose a print shop', body: 'Select an available PrintsX-enabled shop, such as PrintsX Lab.' },
   { icon: <FileUp size={22} />, title: 'Send your document', body: 'Upload a PDF or DOCX from the web app or your phone.' },
   { icon: <MessageSquare size={22} />, title: 'Describe what you need', body: 'State edits and print settings in plain language.' },
-  { icon: <Eye size={22} />, title: 'Review the preview', body: 'PrintX prepares the document and shows you the result.' },
+  { icon: <Eye size={22} />, title: 'Review the preview', body: 'PrintsX prepares the document and shows you the result.' },
   { icon: <CheckCircle size={22} />, title: 'Approve & send', body: 'Confirm and hand the job to the shop.' },
 ];
 
@@ -27,7 +27,7 @@ const HowItWorksPage = () => {
         From a document to a <span className="pubpage-gradient">print-ready job</span>
       </h1>
       <p className="pubpage-lede">
-        PrintX turns document preparation and print instructions into one guided workflow — a
+        PrintsX turns document preparation and print instructions into one guided workflow — a
         simple path for the customer and an organized queue for the shop.
       </p>
 
@@ -55,7 +55,7 @@ const HowItWorksPage = () => {
 
       <h2>How the AI fits in</h2>
       <p>
-        PrintX uses AI to understand your intent, while the actual document changes are handled by
+        PrintsX uses AI to understand your intent, while the actual document changes are handled by
         deterministic document operations — so edits are predictable and reviewable rather than
         improvised.
       </p>
@@ -69,7 +69,7 @@ const HowItWorksPage = () => {
       </ul>
 
       <div className="pubpage-cta-row">
-        <button className="pubpage-btn primary" onClick={() => navigate('/workspace')}>Try PrintX</button>
+        <button className="pubpage-btn primary" onClick={() => navigate('/workspace')}>Try PrintsX</button>
         <a className="pubpage-btn ghost" href="/shopkeeper/login">Shopkeeper Login</a>
       </div>
     </PublicPageLayout>

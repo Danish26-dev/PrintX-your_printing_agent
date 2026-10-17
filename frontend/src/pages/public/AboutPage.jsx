@@ -12,19 +12,19 @@ const AboutPage = () => {
         Making physical document services <span className="pubpage-gradient">as simple as digital ones</span>
       </h1>
       <p className="pubpage-lede">
-        PrintX is building a simpler bridge between customers and local print shops by turning
+        PrintsX is building a simpler bridge between customers and local print shops by turning
         document preparation and printing into an intelligent, guided workflow.
       </p>
 
-      <h2>Why we&rsquo;re building PrintX</h2>
+      <h2>Why we&rsquo;re building PrintsX</h2>
       <p>
         Getting a document printed the way you want still involves a surprising amount of manual
         coordination — finding a shop, sending files over chat apps, explaining edits by hand,
-        re-sending corrections, and describing print settings. PrintX replaces that back-and-forth
+        re-sending corrections, and describing print settings. PrintsX replaces that back-and-forth
         with one reviewable workflow: upload, describe, preview, approve, print.
       </p>
 
-      <h2>What PrintX is today</h2>
+      <h2>What PrintsX is today</h2>
       <div className="pubpage-grid">
         <div className="pubpage-card">
           <span className="card-icon"><Cpu size={22} /></span>
@@ -45,7 +45,7 @@ const AboutPage = () => {
 
       <h2 id="for-print-shops">For print shops</h2>
       <p>
-        PrintX turns incoming print requests into an organized workflow. Instead of scattered
+        PrintsX turns incoming print requests into an organized workflow. Instead of scattered
         messages, shops get a dashboard of incoming jobs with the customer&rsquo;s instructions,
         AI-assisted preparation, and a clear print configuration step before anything is printed.
       </p>
@@ -58,7 +58,7 @@ const AboutPage = () => {
       </ul>
       <div className="pubpage-cta-row">
         <a className="pubpage-btn primary" href="/shopkeeper/login"><Store size={16} /> Shopkeeper Login</a>
-        <button className="pubpage-btn ghost" onClick={() => navigate('/workspace')}>Try PrintX as a customer</button>
+        <button className="pubpage-btn ghost" onClick={() => navigate('/workspace')}>Try PrintsX as a customer</button>
       </div>
 
       <h2>Our vision</h2>

@@ -11,10 +11,10 @@ import '../styles/public-pages.css';
  */
 const PublicPageLayout = ({ title, wide = false, children }) => {
   useEffect(() => {
-    if (title) document.title = `${title} — PrintX`;
+    if (title) document.title = `${title} — PrintsX`;
     window.scrollTo(0, 0);
     return () => {
-      document.title = 'PrintX — Intelligent Printing, Simplified';
+      document.title = 'PrintsX — Intelligent Printing, Simplified';
     };
   }, [title]);
 

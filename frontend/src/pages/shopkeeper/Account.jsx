@@ -26,7 +26,7 @@ const Account = () => {
   };
 
   const fields = [
-    { label: 'Shop Name', value: shopkeeper.shopName || 'PrintX Lab' },
+    { label: 'Shop Name', value: shopkeeper.shopName || 'PrintsX Lab' },
     { label: 'Shopkeeper Name', value: shopkeeper.shopkeeperName || '—' },
     { label: 'Email', value: shopkeeper.email || '—' },
     { label: 'Shop ID', value: shopkeeper.shopId || 'printx-lab' },

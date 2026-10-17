@@ -8,7 +8,7 @@ const Features = () => {
       icon: <Sparkles size={28} />,
       title: 'AI-native workflow',
       description:
-        'Describe edits and print requirements in natural language. PrintX interprets your intent and prepares the job.',
+        'Describe edits and print requirements in natural language. PrintsX interprets your intent and prepares the job.',
       benefits: ['Plain-language instructions', 'Edit + print settings in one request', 'Guided, not manual'],
     },
     {
@@ -29,7 +29,7 @@ const Features = () => {
       icon: <Smartphone size={28} />,
       title: 'Mobile-first',
       description:
-        'Upload and manage print jobs from your phone. PrintX is an installable web app that works in the browser.',
+        'Upload and manage print jobs from your phone. PrintsX is an installable web app that works in the browser.',
       benefits: ['Works in the browser', 'Installable PWA', 'Upload from your phone'],
     },
     {
@@ -52,7 +52,7 @@ const Features = () => {
     <section id="features" className="features-section">
       <div className="features-container">
         <div className="section-header">
-          <span className="section-label">Why PrintX</span>
+          <span className="section-label">Why PrintsX</span>
           <h2 className="section-title">
             A real product, <br />
             <span className="text-gradient">built for both sides</span>

@@ -77,7 +77,7 @@ const InstallPrintX = ({ variant = 'solid', className = '' }) => {
   if (installed) {
     return (
       <span className={`install-printx installed ${className}`}>
-        <Check size={18} /> PrintX installed
+        <Check size={18} /> PrintsX installed
       </span>
     );
   }
@@ -92,7 +92,7 @@ const InstallPrintX = ({ variant = 'solid', className = '' }) => {
         aria-haspopup={mode === 'ios' || mode === 'android' ? 'dialog' : undefined}
       >
         <Download size={18} />
-        <span>{busy ? 'Preparing…' : 'Install PrintX'}</span>
+        <span>{busy ? 'Preparing…' : 'Install PrintsX'}</span>
       </button>
 
       {iosOpen && (
@@ -100,12 +100,12 @@ const InstallPrintX = ({ variant = 'solid', className = '' }) => {
           className="install-ios-backdrop"
           role="dialog"
           aria-modal="true"
-          aria-label="Install PrintX on iPhone or iPad"
+          aria-label="Install PrintsX on iPhone or iPad"
           onClick={() => setIosOpen(false)}
         >
           <div className="install-ios-sheet" onClick={(e) => e.stopPropagation()}>
             <div className="install-ios-head">
-              <h3>Add PrintX to your Home Screen</h3>
+              <h3>Add PrintsX to your Home Screen</h3>
               <button className="install-ios-close" onClick={() => setIosOpen(false)} aria-label="Close">
                 <X size={18} />
               </button>
@@ -121,7 +121,7 @@ const InstallPrintX = ({ variant = 'solid', className = '' }) => {
                 <Plus size={16} /> Choose <strong>Add to Home Screen</strong>.
               </li>
               <li>
-                <Check size={16} /> Tap <strong>Add</strong> — PrintX appears on your Home Screen.
+                <Check size={16} /> Tap <strong>Add</strong> — PrintsX appears on your Home Screen.
               </li>
             </ol>
             <p className="install-ios-note">
@@ -136,18 +136,18 @@ const InstallPrintX = ({ variant = 'solid', className = '' }) => {
           className="install-ios-backdrop"
           role="dialog"
           aria-modal="true"
-          aria-label="Install PrintX on Android"
+          aria-label="Install PrintsX on Android"
           onClick={() => setAndroidOpen(false)}
         >
           <div className="install-ios-sheet" onClick={(e) => e.stopPropagation()}>
             <div className="install-ios-head">
-              <h3>Add PrintX to your Home Screen</h3>
+              <h3>Add PrintsX to your Home Screen</h3>
               <button className="install-ios-close" onClick={() => setAndroidOpen(false)} aria-label="Close">
                 <X size={18} />
               </button>
             </div>
             <p className="install-ios-sub">
-              On Android, install PrintX from the browser menu:
+              On Android, install PrintsX from the browser menu:
             </p>
             <ol className="install-ios-steps">
               <li>
@@ -157,11 +157,11 @@ const InstallPrintX = ({ variant = 'solid', className = '' }) => {
                 <Plus size={16} /> Choose <strong>Install app</strong> or <strong>Add to Home screen</strong>.
               </li>
               <li>
-                <Check size={16} /> Tap <strong>Install</strong> — PrintX appears on your Home Screen.
+                <Check size={16} /> Tap <strong>Install</strong> — PrintsX appears on your Home Screen.
               </li>
             </ol>
             <p className="install-ios-note">
-              Open PrintX in Chrome for the full install option. Some in-app browsers don’t support it.
+              Open PrintsX in Chrome for the full install option. Some in-app browsers don’t support it.
             </p>
           </div>
         </div>
